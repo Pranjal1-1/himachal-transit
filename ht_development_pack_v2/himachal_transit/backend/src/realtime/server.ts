@@ -1,6 +1,7 @@
 import { Server as SocketIOServer, Socket, ExtendedError } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import { createRealtimeEvent, RealtimeEvent, REALTIME_EVENTS } from './events';
+import { getActiveTripByDriverId, getAssignmentByDriverId } from '../db';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
@@ -111,10 +112,33 @@ export class RealtimeServer {
       });
 
       // Handle driver location updates (alternative to HTTP)
-      authSocket.on('driver:location', (data: { tripId: string; latitude: number; longitude: number; speed?: number; heading?: number; accuracy?: number }) => {
-        if (authSocket.role === 'DRIVER' && authSocket.driverId) {
+      authSocket.on('driver:location', async (data: { tripId: string; latitude: number; longitude: number; speed?: number; heading?: number; accuracy?: number }) => {
+        if (authSocket.role !== 'DRIVER' || !authSocket.driverId) {
+          return;
+        }
+
+        try {
+          // Verify driver has active trip matching the supplied tripId
+          const activeTrip = await getActiveTripByDriverId(authSocket.driverId);
+          if (!activeTrip) {
+            console.warn(`Driver ${authSocket.driverId} has no active trip`);
+            return;
+          }
+          if (activeTrip.id !== data.tripId) {
+            console.warn(`Driver ${authSocket.driverId} attempted to send location for unauthorized trip ${data.tripId} (active: ${activeTrip.id})`);
+            return;
+          }
+
+          // Verify driver has active bus assignment
+          const assignment = await getAssignmentByDriverId(authSocket.driverId);
+          if (!assignment) {
+            console.warn(`Driver ${authSocket.driverId} has no active bus assignment`);
+            return;
+          }
+
+          // Broadcast with validated busId from assignment
           this.broadcastBusLocation({
-            busId: '', // Will be resolved from trip
+            busId: assignment.bus_id,
             tripId: data.tripId,
             latitude: data.latitude,
             longitude: data.longitude,
@@ -123,6 +147,8 @@ export class RealtimeServer {
             accuracy: data.accuracy ?? null,
             recordedAt: new Date().toISOString(),
           });
+        } catch (err) {
+          console.error('Error handling driver:location:', err);
         }
       });
 

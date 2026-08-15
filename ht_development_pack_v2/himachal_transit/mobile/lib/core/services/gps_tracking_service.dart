@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:himachal_transit_mobile/services/api_repository.dart';
 import 'package:himachal_transit_mobile/core/services/secure_storage_service.dart';
+import 'package:himachal_transit_mobile/core/services/realtime_service.dart';
 import 'package:himachal_transit_mobile/models/trip_model.dart';
 import 'location_service.dart';
 
@@ -12,12 +13,13 @@ class GpsTrackingService {
   static const _activeTripKey = 'active_trip_id';
 
   final ApiRepository _apiRepository;
+  final RealtimeService _realtimeService;
   StreamSubscription<Position>? _positionSubscription;
   String? _activeTripId;
   bool _isTracking = false;
   final List<CreateGpsLocationRequest> _offlineQueue = [];
 
-  GpsTrackingService(this._apiRepository);
+  GpsTrackingService(this._apiRepository, this._realtimeService);
 
   // Initialize the service
   Future<void> initialize() async {
@@ -102,6 +104,18 @@ class GpsTrackingService {
   Future<void> _sendLocation(CreateGpsLocationRequest request) async {
     try {
       await _apiRepository.addGpsLocation(request);
+      
+      // Also send via WebSocket for realtime updates
+      if (_activeTripId != null) {
+        _realtimeService.sendDriverLocation(
+          tripId: _activeTripId!,
+          latitude: request.latitude,
+          longitude: request.longitude,
+          speed: request.speed,
+          heading: request.heading,
+          accuracy: request.accuracy,
+        );
+      }
     } catch (e) {
       debugPrint('Failed to send GPS location: $e');
       _queueOffline(request);

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:himachal_transit_mobile/services/api_repository.dart';
 import 'package:himachal_transit_mobile/core/services/gps_tracking_service.dart';
+import 'package:himachal_transit_mobile/core/services/realtime_service.dart';
 import 'package:himachal_transit_mobile/models/trip_model.dart';
 
 // GPS Tracking State
@@ -145,7 +146,8 @@ class DriverTripNotifier extends StateNotifier<DriverTripState> {
 // Provider for GPS tracking service
 final gpsTrackingServiceProvider = Provider<GpsTrackingService>((ref) {
   final apiRepository = ref.watch(apiRepositoryProvider);
-  return GpsTrackingService(apiRepository);
+  final realtimeService = ref.watch(realtimeServiceProvider);
+  return GpsTrackingService(apiRepository, realtimeService);
 });
 
 // Provider for driver trip state

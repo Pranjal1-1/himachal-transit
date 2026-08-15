@@ -447,6 +447,30 @@ class RealtimeService {
     }
   }
 
+  // Send driver location update via WebSocket
+  void sendDriverLocation({
+    required String tripId,
+    required double latitude,
+    required double longitude,
+    double? speed,
+    double? heading,
+    double? accuracy,
+  }) {
+    if (_socket != null && _socket!.connected) {
+      _socket!.emit('driver:location', {
+        'tripId': tripId,
+        'latitude': latitude,
+        'longitude': longitude,
+        'speed': speed,
+        'heading': heading,
+        'accuracy': accuracy,
+      });
+      debugPrint('Sent driver:location for trip $tripId');
+    } else {
+      debugPrint('WebSocket not connected, cannot send driver location');
+    }
+  }
+
   void subscribeToOrg(String orgId) {
     _currentOrgId = orgId;
     if (_socket != null && _socket!.connected) {
