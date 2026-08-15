@@ -1,0 +1,23 @@
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  width: 100%;
+}
+
+.card {
+  text-align: center;
+}
+
+.grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.cardLink {
+  display: block;
+}

@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "983f5514-1be2-429a-ab4f-b0b3e8cf0bc4",
+      "full_name": "Test User",
+      "phone": "9991112223",
+      "email": "test2@example.com",
+      "password_hash": "$2b$10$eMfyOQX25fJbYJKJvPeHcuP0gbh2kgeOEmK6FV6715cTQjQwnwM56",
+      "role": "PASSENGER",
+      "created_at": 1786828918935,
+      "updated_at": 1786828918935
+    }
+  ],
+  "organizations": [],
+  "drivers": [],
+  "audit_logs": [],
+  "refresh_tokens": [
+    {
+      "token": "d062250c-4f1e-4ada-97a8-ceb1b5cf7298",
+      "userId": "983f5514-1be2-429a-ab4f-b0b3e8cf0bc4",
+      "expiresAt": 1787433718936,
+      "created_at": 1786828918936
+    }
+  ],
+  "otps": []
+}
