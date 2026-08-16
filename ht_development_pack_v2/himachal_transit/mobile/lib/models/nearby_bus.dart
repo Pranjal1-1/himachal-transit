@@ -13,7 +13,7 @@ class NearbyBus with _$NearbyBus {
     Route? route,
     Trip? trip,
     required double distance,
-    GpsLocation? lastLocation,
+    NearbyBusGpsLocation? lastLocation,
   }) = _NearbyBus;
 
   factory NearbyBus.fromJson(Map<String, dynamic> json) => _$NearbyBusFromJson(json);
@@ -21,8 +21,8 @@ class NearbyBus with _$NearbyBus {
 
 // Simple GpsLocation model for nearby buses
 @freezed
-class GpsLocation with _$GpsLocation {
-  const factory GpsLocation({
+class NearbyBusGpsLocation with _$NearbyBusGpsLocation {
+  const factory NearbyBusGpsLocation({
     required String id,
     required String tripId,
     required double latitude,
@@ -31,7 +31,7 @@ class GpsLocation with _$GpsLocation {
     double? heading,
     double? accuracy,
     required int recordedAt,
-  }) = _GpsLocation;
+  }) = _NearbyBusGpsLocation;
 
-  factory GpsLocation.fromJson(Map<String, dynamic> json) => _$GpsLocationFromJson(json);
+  factory NearbyBusGpsLocation.fromJson(Map<String, dynamic> json) => _$NearbyBusGpsLocationFromJson(json);
 }

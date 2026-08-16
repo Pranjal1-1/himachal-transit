@@ -23,6 +23,8 @@ class Route with _$Route {
     required RouteStatus status,
     @JsonKey(name: 'created_at') String? createdAt,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    String? duration,
+    int? stopsCount,
   }) = _Route;
 
   factory Route.fromJson(Map<String, dynamic> json) => _$RouteFromJson(json);

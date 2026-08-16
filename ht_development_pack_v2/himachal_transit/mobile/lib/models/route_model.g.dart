@@ -16,6 +16,8 @@ _$RouteImpl _$$RouteImplFromJson(Map<String, dynamic> json) => _$RouteImpl(
       status: $enumDecode(_$RouteStatusEnumMap, json['status']),
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
+      duration: json['duration'] as String?,
+      stopsCount: (json['stopsCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RouteImplToJson(_$RouteImpl instance) =>
@@ -29,6 +31,8 @@ Map<String, dynamic> _$$RouteImplToJson(_$RouteImpl instance) =>
       'status': _$RouteStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+      'duration': instance.duration,
+      'stopsCount': instance.stopsCount,
     };
 
 const _$RouteStatusEnumMap = {

@@ -11,7 +11,8 @@ class Notification with _$Notification {
     required String title,
     required String body,
     required bool read,
-    @JsonKey(name: 'created_at') String? createdAt,
+    required String type,
+    @JsonKey(name: 'created_at') required int createdAt,
   }) = _Notification;
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
@@ -23,6 +24,8 @@ class CreateNotificationRequest with _$CreateNotificationRequest {
     @JsonKey(name: 'user_id') String? userId,
     required String title,
     required String body,
+    required String type,
+    @JsonKey(name: 'created_at') int? createdAt,
     bool? read,
   }) = _CreateNotificationRequest;
 

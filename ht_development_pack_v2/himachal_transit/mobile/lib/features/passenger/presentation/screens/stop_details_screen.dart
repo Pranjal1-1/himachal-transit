@@ -147,7 +147,7 @@ class _StopDetailsScreenState extends ConsumerState<StopDetailsScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        stop.address,
+                        stop.address ?? 'N/A',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
@@ -156,13 +156,13 @@ class _StopDetailsScreenState extends ConsumerState<StopDetailsScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: _getStatusColor(stop.status, context).withValues(alpha: 0.12),
+                          color: _getStatusColor(stop.status.name, context).withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          stop.status,
+                          stop.status.name,
                           style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: _getStatusColor(stop.status, context),
+                            color: _getStatusColor(stop.status.name, context),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -179,15 +179,15 @@ class _StopDetailsScreenState extends ConsumerState<StopDetailsScreen> {
                   child: _InfoItem(
                     icon: Icons.map_outlined,
                     label: 'Coordinates',
-                    value: '${stop.latitude.toStringAsFixed(4)}, ${stop.longitude.toStringAsFixed(4)}',
+                    value: '${stop.latitude?.toStringAsFixed(4) ?? 'N/A'}, ${stop.longitude?.toStringAsFixed(4) ?? 'N/A'}',
                   ),
                 ),
                 Expanded(
                   child: _InfoItem(
                     icon: Icons.access_time_outlined,
                     label: 'Status',
-                    value: stop.status,
-                    valueColor: _getStatusColor(stop.status, context),
+                    value: stop.status.name,
+                    valueColor: _getStatusColor(stop.status.name, context),
                   ),
                 ),
               ],
@@ -491,7 +491,7 @@ class _BusAtStopItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    bus.model,
+                    bus.model ?? 'N/A',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -505,13 +505,13 @@ class _BusAtStopItem extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(bus.status, context).withValues(alpha: 0.12),
+                    color: _getStatusColor(bus.status.name, context).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    bus.status,
+                    bus.status.name,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: _getStatusColor(bus.status, context),
+                      color: _getStatusColor(bus.status.name, context),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -535,11 +535,15 @@ class _BusAtStopItem extends StatelessWidget {
   Color _getStatusColor(String status, BuildContext context) {
     switch (status.toUpperCase()) {
       case 'IN_SERVICE':
+      case 'ACTIVE':
         return Theme.of(context).colorScheme.success;
       case 'MAINTENANCE':
         return Theme.of(context).colorScheme.warning;
       case 'OUT_OF_SERVICE':
+      case 'INACTIVE':
         return Theme.of(context).colorScheme.error;
+      case 'RETIRED':
+        return Theme.of(context).colorScheme.outline;
       default:
         return Theme.of(context).colorScheme.outline;
     }

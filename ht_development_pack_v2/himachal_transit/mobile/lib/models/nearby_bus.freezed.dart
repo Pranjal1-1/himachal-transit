@@ -24,7 +24,7 @@ mixin _$NearbyBus {
   Route? get route => throw _privateConstructorUsedError;
   Trip? get trip => throw _privateConstructorUsedError;
   double get distance => throw _privateConstructorUsedError;
-  GpsLocation? get lastLocation => throw _privateConstructorUsedError;
+  NearbyBusGpsLocation? get lastLocation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,12 +42,12 @@ abstract class $NearbyBusCopyWith<$Res> {
       Route? route,
       Trip? trip,
       double distance,
-      GpsLocation? lastLocation});
+      NearbyBusGpsLocation? lastLocation});
 
   $BusCopyWith<$Res> get bus;
   $RouteCopyWith<$Res>? get route;
   $TripCopyWith<$Res>? get trip;
-  $GpsLocationCopyWith<$Res>? get lastLocation;
+  $NearbyBusGpsLocationCopyWith<$Res>? get lastLocation;
 }
 
 /// @nodoc
@@ -89,7 +89,7 @@ class _$NearbyBusCopyWithImpl<$Res, $Val extends NearbyBus>
       lastLocation: freezed == lastLocation
           ? _value.lastLocation
           : lastLocation // ignore: cast_nullable_to_non_nullable
-              as GpsLocation?,
+              as NearbyBusGpsLocation?,
     ) as $Val);
   }
 
@@ -127,12 +127,12 @@ class _$NearbyBusCopyWithImpl<$Res, $Val extends NearbyBus>
 
   @override
   @pragma('vm:prefer-inline')
-  $GpsLocationCopyWith<$Res>? get lastLocation {
+  $NearbyBusGpsLocationCopyWith<$Res>? get lastLocation {
     if (_value.lastLocation == null) {
       return null;
     }
 
-    return $GpsLocationCopyWith<$Res>(_value.lastLocation!, (value) {
+    return $NearbyBusGpsLocationCopyWith<$Res>(_value.lastLocation!, (value) {
       return _then(_value.copyWith(lastLocation: value) as $Val);
     });
   }
@@ -151,7 +151,7 @@ abstract class _$$NearbyBusImplCopyWith<$Res>
       Route? route,
       Trip? trip,
       double distance,
-      GpsLocation? lastLocation});
+      NearbyBusGpsLocation? lastLocation});
 
   @override
   $BusCopyWith<$Res> get bus;
@@ -160,7 +160,7 @@ abstract class _$$NearbyBusImplCopyWith<$Res>
   @override
   $TripCopyWith<$Res>? get trip;
   @override
-  $GpsLocationCopyWith<$Res>? get lastLocation;
+  $NearbyBusGpsLocationCopyWith<$Res>? get lastLocation;
 }
 
 /// @nodoc
@@ -200,7 +200,7 @@ class __$$NearbyBusImplCopyWithImpl<$Res>
       lastLocation: freezed == lastLocation
           ? _value.lastLocation
           : lastLocation // ignore: cast_nullable_to_non_nullable
-              as GpsLocation?,
+              as NearbyBusGpsLocation?,
     ));
   }
 }
@@ -227,7 +227,7 @@ class _$NearbyBusImpl implements _NearbyBus {
   @override
   final double distance;
   @override
-  final GpsLocation? lastLocation;
+  final NearbyBusGpsLocation? lastLocation;
 
   @override
   String toString() {
@@ -273,7 +273,7 @@ abstract class _NearbyBus implements NearbyBus {
       final Route? route,
       final Trip? trip,
       required final double distance,
-      final GpsLocation? lastLocation}) = _$NearbyBusImpl;
+      final NearbyBusGpsLocation? lastLocation}) = _$NearbyBusImpl;
 
   factory _NearbyBus.fromJson(Map<String, dynamic> json) =
       _$NearbyBusImpl.fromJson;
@@ -287,19 +287,19 @@ abstract class _NearbyBus implements NearbyBus {
   @override
   double get distance;
   @override
-  GpsLocation? get lastLocation;
+  NearbyBusGpsLocation? get lastLocation;
   @override
   @JsonKey(ignore: true)
   _$$NearbyBusImplCopyWith<_$NearbyBusImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-GpsLocation _$GpsLocationFromJson(Map<String, dynamic> json) {
-  return _GpsLocation.fromJson(json);
+NearbyBusGpsLocation _$NearbyBusGpsLocationFromJson(Map<String, dynamic> json) {
+  return _NearbyBusGpsLocation.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GpsLocation {
+mixin _$NearbyBusGpsLocation {
   String get id => throw _privateConstructorUsedError;
   String get tripId => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
@@ -311,15 +311,15 @@ mixin _$GpsLocation {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GpsLocationCopyWith<GpsLocation> get copyWith =>
+  $NearbyBusGpsLocationCopyWith<NearbyBusGpsLocation> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GpsLocationCopyWith<$Res> {
-  factory $GpsLocationCopyWith(
-          GpsLocation value, $Res Function(GpsLocation) then) =
-      _$GpsLocationCopyWithImpl<$Res, GpsLocation>;
+abstract class $NearbyBusGpsLocationCopyWith<$Res> {
+  factory $NearbyBusGpsLocationCopyWith(NearbyBusGpsLocation value,
+          $Res Function(NearbyBusGpsLocation) then) =
+      _$NearbyBusGpsLocationCopyWithImpl<$Res, NearbyBusGpsLocation>;
   @useResult
   $Res call(
       {String id,
@@ -333,9 +333,10 @@ abstract class $GpsLocationCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GpsLocationCopyWithImpl<$Res, $Val extends GpsLocation>
-    implements $GpsLocationCopyWith<$Res> {
-  _$GpsLocationCopyWithImpl(this._value, this._then);
+class _$NearbyBusGpsLocationCopyWithImpl<$Res,
+        $Val extends NearbyBusGpsLocation>
+    implements $NearbyBusGpsLocationCopyWith<$Res> {
+  _$NearbyBusGpsLocationCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -392,11 +393,11 @@ class _$GpsLocationCopyWithImpl<$Res, $Val extends GpsLocation>
 }
 
 /// @nodoc
-abstract class _$$GpsLocationImplCopyWith<$Res>
-    implements $GpsLocationCopyWith<$Res> {
-  factory _$$GpsLocationImplCopyWith(
-          _$GpsLocationImpl value, $Res Function(_$GpsLocationImpl) then) =
-      __$$GpsLocationImplCopyWithImpl<$Res>;
+abstract class _$$NearbyBusGpsLocationImplCopyWith<$Res>
+    implements $NearbyBusGpsLocationCopyWith<$Res> {
+  factory _$$NearbyBusGpsLocationImplCopyWith(_$NearbyBusGpsLocationImpl value,
+          $Res Function(_$NearbyBusGpsLocationImpl) then) =
+      __$$NearbyBusGpsLocationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -411,11 +412,11 @@ abstract class _$$GpsLocationImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$GpsLocationImplCopyWithImpl<$Res>
-    extends _$GpsLocationCopyWithImpl<$Res, _$GpsLocationImpl>
-    implements _$$GpsLocationImplCopyWith<$Res> {
-  __$$GpsLocationImplCopyWithImpl(
-      _$GpsLocationImpl _value, $Res Function(_$GpsLocationImpl) _then)
+class __$$NearbyBusGpsLocationImplCopyWithImpl<$Res>
+    extends _$NearbyBusGpsLocationCopyWithImpl<$Res, _$NearbyBusGpsLocationImpl>
+    implements _$$NearbyBusGpsLocationImplCopyWith<$Res> {
+  __$$NearbyBusGpsLocationImplCopyWithImpl(_$NearbyBusGpsLocationImpl _value,
+      $Res Function(_$NearbyBusGpsLocationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -430,7 +431,7 @@ class __$$GpsLocationImplCopyWithImpl<$Res>
     Object? accuracy = freezed,
     Object? recordedAt = null,
   }) {
-    return _then(_$GpsLocationImpl(
+    return _then(_$NearbyBusGpsLocationImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -469,8 +470,8 @@ class __$$GpsLocationImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GpsLocationImpl implements _GpsLocation {
-  const _$GpsLocationImpl(
+class _$NearbyBusGpsLocationImpl implements _NearbyBusGpsLocation {
+  const _$NearbyBusGpsLocationImpl(
       {required this.id,
       required this.tripId,
       required this.latitude,
@@ -480,8 +481,8 @@ class _$GpsLocationImpl implements _GpsLocation {
       this.accuracy,
       required this.recordedAt});
 
-  factory _$GpsLocationImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GpsLocationImplFromJson(json);
+  factory _$NearbyBusGpsLocationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NearbyBusGpsLocationImplFromJson(json);
 
   @override
   final String id;
@@ -502,14 +503,14 @@ class _$GpsLocationImpl implements _GpsLocation {
 
   @override
   String toString() {
-    return 'GpsLocation(id: $id, tripId: $tripId, latitude: $latitude, longitude: $longitude, speed: $speed, heading: $heading, accuracy: $accuracy, recordedAt: $recordedAt)';
+    return 'NearbyBusGpsLocation(id: $id, tripId: $tripId, latitude: $latitude, longitude: $longitude, speed: $speed, heading: $heading, accuracy: $accuracy, recordedAt: $recordedAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GpsLocationImpl &&
+            other is _$NearbyBusGpsLocationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.tripId, tripId) || other.tripId == tripId) &&
             (identical(other.latitude, latitude) ||
@@ -532,19 +533,21 @@ class _$GpsLocationImpl implements _GpsLocation {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$GpsLocationImplCopyWith<_$GpsLocationImpl> get copyWith =>
-      __$$GpsLocationImplCopyWithImpl<_$GpsLocationImpl>(this, _$identity);
+  _$$NearbyBusGpsLocationImplCopyWith<_$NearbyBusGpsLocationImpl>
+      get copyWith =>
+          __$$NearbyBusGpsLocationImplCopyWithImpl<_$NearbyBusGpsLocationImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GpsLocationImplToJson(
+    return _$$NearbyBusGpsLocationImplToJson(
       this,
     );
   }
 }
 
-abstract class _GpsLocation implements GpsLocation {
-  const factory _GpsLocation(
+abstract class _NearbyBusGpsLocation implements NearbyBusGpsLocation {
+  const factory _NearbyBusGpsLocation(
       {required final String id,
       required final String tripId,
       required final double latitude,
@@ -552,10 +555,10 @@ abstract class _GpsLocation implements GpsLocation {
       final double? speed,
       final double? heading,
       final double? accuracy,
-      required final int recordedAt}) = _$GpsLocationImpl;
+      required final int recordedAt}) = _$NearbyBusGpsLocationImpl;
 
-  factory _GpsLocation.fromJson(Map<String, dynamic> json) =
-      _$GpsLocationImpl.fromJson;
+  factory _NearbyBusGpsLocation.fromJson(Map<String, dynamic> json) =
+      _$NearbyBusGpsLocationImpl.fromJson;
 
   @override
   String get id;
@@ -575,6 +578,6 @@ abstract class _GpsLocation implements GpsLocation {
   int get recordedAt;
   @override
   @JsonKey(ignore: true)
-  _$$GpsLocationImplCopyWith<_$GpsLocationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$NearbyBusGpsLocationImplCopyWith<_$NearbyBusGpsLocationImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

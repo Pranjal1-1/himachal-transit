@@ -32,6 +32,8 @@ mixin _$Route {
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  String? get duration => throw _privateConstructorUsedError;
+  int? get stopsCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +54,9 @@ abstract class $RouteCopyWith<$Res> {
       String? geometry,
       RouteStatus status,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      String? duration,
+      int? stopsCount});
 }
 
 /// @nodoc
@@ -77,6 +81,8 @@ class _$RouteCopyWithImpl<$Res, $Val extends Route>
     Object? status = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? duration = freezed,
+    Object? stopsCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -115,6 +121,14 @@ class _$RouteCopyWithImpl<$Res, $Val extends Route>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stopsCount: freezed == stopsCount
+          ? _value.stopsCount
+          : stopsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -135,7 +149,9 @@ abstract class _$$RouteImplCopyWith<$Res> implements $RouteCopyWith<$Res> {
       String? geometry,
       RouteStatus status,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      String? duration,
+      int? stopsCount});
 }
 
 /// @nodoc
@@ -158,6 +174,8 @@ class __$$RouteImplCopyWithImpl<$Res>
     Object? status = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? duration = freezed,
+    Object? stopsCount = freezed,
   }) {
     return _then(_$RouteImpl(
       id: null == id
@@ -196,6 +214,14 @@ class __$$RouteImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stopsCount: freezed == stopsCount
+          ? _value.stopsCount
+          : stopsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -212,7 +238,9 @@ class _$RouteImpl implements _Route {
       this.geometry,
       required this.status,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt});
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      this.duration,
+      this.stopsCount});
 
   factory _$RouteImpl.fromJson(Map<String, dynamic> json) =>
       _$$RouteImplFromJson(json);
@@ -238,10 +266,14 @@ class _$RouteImpl implements _Route {
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @override
+  final String? duration;
+  @override
+  final int? stopsCount;
 
   @override
   String toString() {
-    return 'Route(id: $id, organizationId: $organizationId, name: $name, origin: $origin, destination: $destination, geometry: $geometry, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Route(id: $id, organizationId: $organizationId, name: $name, origin: $origin, destination: $destination, geometry: $geometry, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, duration: $duration, stopsCount: $stopsCount)';
   }
 
   @override
@@ -262,13 +294,28 @@ class _$RouteImpl implements _Route {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.stopsCount, stopsCount) ||
+                other.stopsCount == stopsCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, organizationId, name, origin,
-      destination, geometry, status, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      organizationId,
+      name,
+      origin,
+      destination,
+      geometry,
+      status,
+      createdAt,
+      updatedAt,
+      duration,
+      stopsCount);
 
   @JsonKey(ignore: true)
   @override
@@ -294,7 +341,9 @@ abstract class _Route implements Route {
       final String? geometry,
       required final RouteStatus status,
       @JsonKey(name: 'created_at') final String? createdAt,
-      @JsonKey(name: 'updated_at') final String? updatedAt}) = _$RouteImpl;
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final String? duration,
+      final int? stopsCount}) = _$RouteImpl;
 
   factory _Route.fromJson(Map<String, dynamic> json) = _$RouteImpl.fromJson;
 
@@ -319,6 +368,10 @@ abstract class _Route implements Route {
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  String? get duration;
+  @override
+  int? get stopsCount;
   @override
   @JsonKey(ignore: true)
   _$$RouteImplCopyWith<_$RouteImpl> get copyWith =>

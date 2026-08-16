@@ -18,7 +18,8 @@ _$NearbyBusImpl _$$NearbyBusImplFromJson(Map<String, dynamic> json) =>
       distance: (json['distance'] as num).toDouble(),
       lastLocation: json['lastLocation'] == null
           ? null
-          : GpsLocation.fromJson(json['lastLocation'] as Map<String, dynamic>),
+          : NearbyBusGpsLocation.fromJson(
+              json['lastLocation'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$NearbyBusImplToJson(_$NearbyBusImpl instance) =>
@@ -30,8 +31,9 @@ Map<String, dynamic> _$$NearbyBusImplToJson(_$NearbyBusImpl instance) =>
       'lastLocation': instance.lastLocation,
     };
 
-_$GpsLocationImpl _$$GpsLocationImplFromJson(Map<String, dynamic> json) =>
-    _$GpsLocationImpl(
+_$NearbyBusGpsLocationImpl _$$NearbyBusGpsLocationImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NearbyBusGpsLocationImpl(
       id: json['id'] as String,
       tripId: json['tripId'] as String,
       latitude: (json['latitude'] as num).toDouble(),
@@ -42,7 +44,8 @@ _$GpsLocationImpl _$$GpsLocationImplFromJson(Map<String, dynamic> json) =>
       recordedAt: (json['recordedAt'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$GpsLocationImplToJson(_$GpsLocationImpl instance) =>
+Map<String, dynamic> _$$NearbyBusGpsLocationImplToJson(
+        _$NearbyBusGpsLocationImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'tripId': instance.tripId,

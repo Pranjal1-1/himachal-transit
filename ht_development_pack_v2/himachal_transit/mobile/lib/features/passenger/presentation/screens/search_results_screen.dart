@@ -233,7 +233,7 @@ class _BusResultCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      bus.model,
+                      bus.model ?? 'N/A',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -246,16 +246,17 @@ class _BusResultCard extends StatelessWidget {
                           label: '${bus.capacity} seats',
                         ),
                         const SizedBox(width: 8),
-                        _InfoChip(
-                          icon: Icons.local_gas_station_outlined,
-                          label: bus.fuelType,
-                        ),
+_InfoChip(
+                            icon: Icons.local_gas_station_outlined,
+                            label: bus.fuelType?.name ?? 'N/A',
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                         const SizedBox(width: 8),
-                        _InfoChip(
-                          icon: Icons.verified_outlined,
-                          label: bus.status,
-                          color: _getStatusColor(bus.status, context),
-                        ),
+_InfoChip(
+                            icon: Icons.verified_outlined,
+                            label: bus.status.name,
+                            color: _getStatusColor(bus.status.name, context),
+                          ),
                       ],
                     ),
                   ],

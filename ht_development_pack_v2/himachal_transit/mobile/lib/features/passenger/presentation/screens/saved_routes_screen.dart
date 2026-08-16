@@ -278,7 +278,7 @@ class _SavedRouteCard extends StatelessWidget {
                         children: [
                           _InfoChip(
                             icon: Icons.access_time_outlined,
-                            label: route.duration ?? '~${route.duration}',
+                            label: route.duration ?? 'N/A',
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                           const SizedBox(width: 8),

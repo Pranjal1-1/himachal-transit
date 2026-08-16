@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:himachal_transit_mobile/core/theme/app_theme.dart';
-import 'package:himachal_transit_mobile/models/notification_model.dart';
+import 'package:himachal_transit_mobile/models/notification_model.dart' as notification_model;
 import 'package:himachal_transit_mobile/services/api_repository.dart';
 import 'package:himachal_transit_mobile/widgets/common/empty_state.dart';
 
@@ -14,7 +14,7 @@ class NotificationsScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
-  late Future<List<Notification>> _notificationsFuture;
+  late Future<List<notification_model.Notification>> _notificationsFuture;
   
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,
-        child: FutureBuilder<List<Notification>>(
+        child: FutureBuilder<List<notification_model.Notification>>(
           future: _notificationsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -183,7 +183,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
 }
 
 class _NotificationCard extends StatelessWidget {
-  final Notification notification;
+  final notification_model.Notification notification;
   final VoidCallback onTap;
   
   const _NotificationCard({
@@ -275,7 +275,7 @@ class _NotificationCard extends StatelessWidget {
       case 'trip_started':
         return Icons.directions_bus;
       case 'trip_ended':
-        return Icons.flag_checkered;
+        return Icons.flag;
       case 'delay':
         return Icons.schedule_outlined;
       case 'route_change':

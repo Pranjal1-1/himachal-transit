@@ -13,7 +13,8 @@ _$NotificationImpl _$$NotificationImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       body: json['body'] as String,
       read: json['read'] as bool,
-      createdAt: json['created_at'] as String?,
+      type: json['type'] as String,
+      createdAt: (json['created_at'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$NotificationImplToJson(_$NotificationImpl instance) =>
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$NotificationImplToJson(_$NotificationImpl instance) =>
       'title': instance.title,
       'body': instance.body,
       'read': instance.read,
+      'type': instance.type,
       'created_at': instance.createdAt,
     };
 
@@ -32,6 +34,8 @@ _$CreateNotificationRequestImpl _$$CreateNotificationRequestImplFromJson(
       userId: json['user_id'] as String?,
       title: json['title'] as String,
       body: json['body'] as String,
+      type: json['type'] as String,
+      createdAt: (json['created_at'] as num?)?.toInt(),
       read: json['read'] as bool?,
     );
 
@@ -41,5 +45,7 @@ Map<String, dynamic> _$$CreateNotificationRequestImplToJson(
       'user_id': instance.userId,
       'title': instance.title,
       'body': instance.body,
+      'type': instance.type,
+      'created_at': instance.createdAt,
       'read': instance.read,
     };

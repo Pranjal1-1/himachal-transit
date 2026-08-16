@@ -26,8 +26,9 @@ mixin _$Notification {
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
   bool get read => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  int get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $NotificationCopyWith<$Res> {
       String title,
       String body,
       bool read,
-      @JsonKey(name: 'created_at') String? createdAt});
+      String type,
+      @JsonKey(name: 'created_at') int createdAt});
 }
 
 /// @nodoc
@@ -68,7 +70,8 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
     Object? title = null,
     Object? body = null,
     Object? read = null,
-    Object? createdAt = freezed,
+    Object? type = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,10 +94,14 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: freezed == createdAt
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
     ) as $Val);
   }
 }
@@ -113,7 +120,8 @@ abstract class _$$NotificationImplCopyWith<$Res>
       String title,
       String body,
       bool read,
-      @JsonKey(name: 'created_at') String? createdAt});
+      String type,
+      @JsonKey(name: 'created_at') int createdAt});
 }
 
 /// @nodoc
@@ -132,7 +140,8 @@ class __$$NotificationImplCopyWithImpl<$Res>
     Object? title = null,
     Object? body = null,
     Object? read = null,
-    Object? createdAt = freezed,
+    Object? type = null,
+    Object? createdAt = null,
   }) {
     return _then(_$NotificationImpl(
       id: null == id
@@ -155,10 +164,14 @@ class __$$NotificationImplCopyWithImpl<$Res>
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: freezed == createdAt
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
     ));
   }
 }
@@ -172,7 +185,8 @@ class _$NotificationImpl implements _Notification {
       required this.title,
       required this.body,
       required this.read,
-      @JsonKey(name: 'created_at') this.createdAt});
+      required this.type,
+      @JsonKey(name: 'created_at') required this.createdAt});
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationImplFromJson(json);
@@ -189,12 +203,14 @@ class _$NotificationImpl implements _Notification {
   @override
   final bool read;
   @override
+  final String type;
+  @override
   @JsonKey(name: 'created_at')
-  final String? createdAt;
+  final int createdAt;
 
   @override
   String toString() {
-    return 'Notification(id: $id, userId: $userId, title: $title, body: $body, read: $read, createdAt: $createdAt)';
+    return 'Notification(id: $id, userId: $userId, title: $title, body: $body, read: $read, type: $type, createdAt: $createdAt)';
   }
 
   @override
@@ -207,6 +223,7 @@ class _$NotificationImpl implements _Notification {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.read, read) || other.read == read) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -214,7 +231,7 @@ class _$NotificationImpl implements _Notification {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, title, body, read, createdAt);
+      Object.hash(runtimeType, id, userId, title, body, read, type, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +254,8 @@ abstract class _Notification implements Notification {
           required final String title,
           required final String body,
           required final bool read,
-          @JsonKey(name: 'created_at') final String? createdAt}) =
+          required final String type,
+          @JsonKey(name: 'created_at') required final int createdAt}) =
       _$NotificationImpl;
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
@@ -255,8 +273,10 @@ abstract class _Notification implements Notification {
   @override
   bool get read;
   @override
+  String get type;
+  @override
   @JsonKey(name: 'created_at')
-  String? get createdAt;
+  int get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$NotificationImplCopyWith<_$NotificationImpl> get copyWith =>
@@ -274,6 +294,9 @@ mixin _$CreateNotificationRequest {
   String? get userId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  int? get createdAt => throw _privateConstructorUsedError;
   bool? get read => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -292,6 +315,8 @@ abstract class $CreateNotificationRequestCopyWith<$Res> {
       {@JsonKey(name: 'user_id') String? userId,
       String title,
       String body,
+      String type,
+      @JsonKey(name: 'created_at') int? createdAt,
       bool? read});
 }
 
@@ -312,6 +337,8 @@ class _$CreateNotificationRequestCopyWithImpl<$Res,
     Object? userId = freezed,
     Object? title = null,
     Object? body = null,
+    Object? type = null,
+    Object? createdAt = freezed,
     Object? read = freezed,
   }) {
     return _then(_value.copyWith(
@@ -327,6 +354,14 @@ class _$CreateNotificationRequestCopyWithImpl<$Res,
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
@@ -348,6 +383,8 @@ abstract class _$$CreateNotificationRequestImplCopyWith<$Res>
       {@JsonKey(name: 'user_id') String? userId,
       String title,
       String body,
+      String type,
+      @JsonKey(name: 'created_at') int? createdAt,
       bool? read});
 }
 
@@ -367,6 +404,8 @@ class __$$CreateNotificationRequestImplCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? title = null,
     Object? body = null,
+    Object? type = null,
+    Object? createdAt = freezed,
     Object? read = freezed,
   }) {
     return _then(_$CreateNotificationRequestImpl(
@@ -382,6 +421,14 @@ class __$$CreateNotificationRequestImplCopyWithImpl<$Res>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
@@ -397,6 +444,8 @@ class _$CreateNotificationRequestImpl implements _CreateNotificationRequest {
       {@JsonKey(name: 'user_id') this.userId,
       required this.title,
       required this.body,
+      required this.type,
+      @JsonKey(name: 'created_at') this.createdAt,
       this.read});
 
   factory _$CreateNotificationRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -410,11 +459,16 @@ class _$CreateNotificationRequestImpl implements _CreateNotificationRequest {
   @override
   final String body;
   @override
+  final String type;
+  @override
+  @JsonKey(name: 'created_at')
+  final int? createdAt;
+  @override
   final bool? read;
 
   @override
   String toString() {
-    return 'CreateNotificationRequest(userId: $userId, title: $title, body: $body, read: $read)';
+    return 'CreateNotificationRequest(userId: $userId, title: $title, body: $body, type: $type, createdAt: $createdAt, read: $read)';
   }
 
   @override
@@ -425,12 +479,16 @@ class _$CreateNotificationRequestImpl implements _CreateNotificationRequest {
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.read, read) || other.read == read));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, title, body, read);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, title, body, type, createdAt, read);
 
   @JsonKey(ignore: true)
   @override
@@ -452,6 +510,8 @@ abstract class _CreateNotificationRequest implements CreateNotificationRequest {
       {@JsonKey(name: 'user_id') final String? userId,
       required final String title,
       required final String body,
+      required final String type,
+      @JsonKey(name: 'created_at') final int? createdAt,
       final bool? read}) = _$CreateNotificationRequestImpl;
 
   factory _CreateNotificationRequest.fromJson(Map<String, dynamic> json) =
@@ -464,6 +524,11 @@ abstract class _CreateNotificationRequest implements CreateNotificationRequest {
   String get title;
   @override
   String get body;
+  @override
+  String get type;
+  @override
+  @JsonKey(name: 'created_at')
+  int? get createdAt;
   @override
   bool? get read;
   @override

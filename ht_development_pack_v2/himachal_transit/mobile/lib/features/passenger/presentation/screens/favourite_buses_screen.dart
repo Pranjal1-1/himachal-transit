@@ -264,7 +264,7 @@ class _FavouriteBusCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     if (bus != null) ...[
                       Text(
-                        bus.model,
+                        bus.model ?? 'N/A',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
@@ -280,14 +280,14 @@ class _FavouriteBusCard extends StatelessWidget {
                           const SizedBox(width: 8),
                           _InfoChip(
                             icon: Icons.local_gas_station_outlined,
-                            label: bus.fuelType,
+                            label: bus.fuelType?.name ?? 'N/A',
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                           const SizedBox(width: 8),
                           _InfoChip(
                             icon: Icons.verified_outlined,
-                            label: bus.status,
-                            color: _getStatusColor(bus.status, context),
+                            label: bus.status.name,
+                            color: _getStatusColor(bus.status.name, context),
                           ),
                         ],
                       ),
@@ -325,13 +325,13 @@ class _FavouriteBusCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'unfavourite',
                     child: Row(
                       children: [
-                        Icon(Icons.favorite_remove, color: Colors.red),
-                        SizedBox(width: 8),
-                        Text('Remove', style: TextStyle(color: Colors.red)),
+                        Icon(Icons.favorite, color: Colors.red),
+                        const SizedBox(width: 8),
+                        const Text('Remove', style: TextStyle(color: Colors.red)),
                       ],
                     ),
                   ),
