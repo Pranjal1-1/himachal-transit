@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:himachal_transit_mobile/core/services/realtime_service.dart';
 import 'package:himachal_transit_mobile/core/theme/app_theme.dart';
+import 'package:himachal_transit_mobile/features/passenger/presentation/providers/eta_provider.dart';
 
 class TripTrackingScreen extends ConsumerStatefulWidget {
   final String tripId;
@@ -34,7 +35,7 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
     ref.read(realtimeServiceProvider).disconnect();
     super.dispose();
   }
-
+  
   void _handleBusLocationUpdate(LatLng position) {
     if (!mounted) return;
     setState(() {
@@ -45,7 +46,7 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
       _mapController.move(position, 15.0);
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     final realtimeState = ref.watch(realtimeServiceProvider).currentState;
@@ -53,6 +54,10 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
     final lastLocation = realtimeState.lastBusLocation;
     final lastBusStatus = realtimeState.lastBusStatus;
     final lastTripEnded = realtimeState.lastTripEnded;
+    
+    // Watch ETA from provider
+    final etaState = ref.watch(etaProvider(widget.tripId));
+    final etaResult = etaState.etaResult;
     
     // Update bus position from realtime data
     if (lastLocation != null && _busPosition?.latitude != lastLocation.latitude) {
@@ -209,7 +214,9 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
                           child: _TripInfoItem(
                             icon: Icons.schedule_outlined,
                             label: 'ETA',
-                            value: lastLocation != null ? _calculateEta(LatLng(lastLocation.latitude, lastLocation.longitude)) : '03:15 PM',
+                            value: etaResult?.etaToDestinationMinutes != null 
+                                ? formatEta(etaResult!.etaToDestinationMinutes!) 
+                                : 'Calculating...',
                           ),
                         ),
                       ],
@@ -404,8 +411,12 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
                         Expanded(
                           child: _StatCard(
                             label: 'Destination ETA',
-                            value: lastLocation != null ? _calculateEta(LatLng(lastLocation.latitude, lastLocation.longitude)) : '03:15 PM',
-                            subtitle: '2h 15m remaining',
+                            value: etaResult?.etaToDestinationMinutes != null 
+                                ? formatEta(etaResult!.etaToDestinationMinutes!) 
+                                : 'Calculating...',
+                            subtitle: etaResult?.totalRemainingDistanceKm != null 
+                                ? '${etaResult!.totalRemainingDistanceKm.toStringAsFixed(1)} km remaining'
+                                : '2h 15m remaining',
                             icon: Icons.access_time_outlined,
                             color: Theme.of(context).colorScheme.error,
                           ),
@@ -436,7 +447,9 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
                       name: 'Mandi',
                       address: 'Mandi, HP',
                       scheduledTime: '11:45 AM',
-                      estimatedTime: lastLocation != null ? _calculateNextStopEta(LatLng(lastLocation.latitude, lastLocation.longitude)) : '11:50 AM',
+                      estimatedTime: etaResult?.nextStop != null && etaResult!.etaMinutes != null
+                          ? formatEta(etaResult!.etaMinutes!)
+                          : 'Calculating...',
                       delay: '+5 min',
                       isNext: true,
                     ),
@@ -599,17 +612,15 @@ class _TripTrackingScreenState extends ConsumerState<TripTrackingScreen> {
     }
   }
 
-  String _calculateEta(LatLng position) {
-    // Simplified ETA calculation based on distance to destination
-    // In production, this would use the ETA engine
-    return '03:15 PM';
+  String formatEta(int minutes) {
+    if (minutes < 1) return '< 1 min';
+    if (minutes < 60) return '$minutes min';
+    final hours = minutes ~/ 60;
+    final mins = minutes % 60;
+    if (mins == 0) return '$hours h';
+    return '$hours h $mins min';
   }
-
-  String _calculateNextStopEta(LatLng position) {
-    // Simplified next stop ETA
-    return '11:50 AM';
-  }
-
+  
   String _formatTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);

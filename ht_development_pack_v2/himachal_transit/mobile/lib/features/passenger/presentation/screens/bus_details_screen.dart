@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:himachal_transit_mobile/core/theme/app_theme.dart';
 import 'package:himachal_transit_mobile/features/maps/widgets/live_tracking_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:himachal_transit_mobile/features/passenger/presentation/providers/eta_provider.dart';
 
-class BusDetailsScreen extends StatelessWidget {
+class BusDetailsScreen extends ConsumerWidget {
   final String busId;
+  final String? tripId;
   
-  const BusDetailsScreen({super.key, required this.busId});
+  const BusDetailsScreen({
+    super.key, 
+    required this.busId,
+    this.tripId,
+  });
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch ETA if tripId is provided
+    final etaState = tripId != null ? ref.watch(etaProvider(tripId!)) : null;
+    final etaResult = etaState?.etaResult;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -106,6 +117,18 @@ class BusDetailsScreen extends StatelessWidget {
                             valueColor: Theme.of(context).colorScheme.success,
                           ),
                         ),
+                        // ETA to next stop
+                        if (tripId != null && etaResult != null)
+                          Expanded(
+                            child: _InfoItem(
+                              icon: Icons.access_time_outlined,
+                              label: 'ETA to Next Stop',
+                              value: etaResult!.etaMinutes != null 
+                                  ? formatEta(etaResult!.etaMinutes!)
+                                  : 'Calculating...',
+                              valueColor: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
                       ],
                     ),
                   ],
@@ -171,7 +194,9 @@ class BusDetailsScreen extends StatelessWidget {
                 nextStop: const LatLng(31.5446, 77.1856),
                 currentSpeed: 45.0,
                 nextStopName: 'Mandi',
-                etaToNextStop: '12 min',
+                etaToNextStop: (tripId != null && etaResult != null && etaResult!.etaMinutes != null)
+                    ? formatEta(etaResult!.etaMinutes!)
+                    : '12 min',
               ),
             ),
             const SizedBox(height: 16),
@@ -538,6 +563,15 @@ class _StopListItem extends StatelessWidget {
         ],
       ),
     );
-  }
+}
+}
+
+String formatEta(int minutes) {
+  if (minutes < 1) return '< 1 min';
+  if (minutes < 60) return '$minutes min';
+  final hours = minutes ~/ 60;
+  final mins = minutes % 60;
+  if (mins == 0) return '$hours h';
+  return '$hours h $mins min';
 }
 
