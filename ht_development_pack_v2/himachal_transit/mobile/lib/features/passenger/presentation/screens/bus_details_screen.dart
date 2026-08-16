@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:himachal_transit_mobile/core/theme/app_theme.dart';
+import 'package:himachal_transit_mobile/features/maps/widgets/live_tracking_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class BusDetailsScreen extends StatelessWidget {
   final String busId;
@@ -150,90 +152,26 @@ class BusDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             
-            // Live Location (placeholder)
+// Live Location with Map
             Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.my_location,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Live Location',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.map_outlined,
-                              size: 48,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'Map View (Coming Soon)',
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Integration with map provider pending',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _LiveInfoItem(
-                            label: 'Speed',
-                            value: '45 km/h',
-                            icon: Icons.speed_outlined,
-                          ),
-                        ),
-                        Expanded(
-                          child: _LiveInfoItem(
-                            label: 'Next Stop',
-                            value: 'Mandi (12 min)',
-                            icon: Icons.location_on_outlined,
-                          ),
-                        ),
-                        Expanded(
-                          child: _LiveInfoItem(
-                            label: 'ETA to Destination',
-                            value: '2h 15m',
-                            icon: Icons.access_time_outlined,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: LiveTrackingMap(
+                busLocation: const LatLng(31.5446, 77.1856), // Example location
+                routePoints: const [
+                  LatLng(31.1048, 77.1734), // Shimla
+                  LatLng(31.5446, 77.1856), // Mandi
+                  LatLng(32.2432, 77.1892), // Manali
+                ],
+                stops: const [
+                  LatLng(31.1048, 77.1734), // Shimla ISBT
+                  LatLng(31.5446, 77.1856), // Mandi
+                  LatLng(32.2432, 77.1892), // Manali
+                ],
+                nextStop: const LatLng(31.5446, 77.1856),
+                currentSpeed: 45.0,
+                nextStopName: 'Mandi',
+                etaToNextStop: '12 min',
               ),
             ),
             const SizedBox(height: 16),

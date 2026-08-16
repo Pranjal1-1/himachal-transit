@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:himachal_transit_mobile/core/theme/app_theme.dart';
+import 'package:himachal_transit_mobile/features/maps/widgets/live_tracking_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class RouteDetailsScreen extends StatelessWidget {
   final String routeId;
@@ -118,58 +120,21 @@ class RouteDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             
-            // Map View (placeholder)
+            // Route Map with Live Tracking
             Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Route Map',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.fullscreen_outlined, size: 18),
-                          label: const Text('Full Screen'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.map_outlined,
-                              size: 64,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'Route Map (Coming Soon)',
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: LiveTrackingMap(
+                routePoints: const [
+                  LatLng(31.1048, 77.1734), // Shimla
+                  LatLng(31.5446, 77.1856), // Mandi
+                  LatLng(32.2432, 77.1892), // Manali
+                ],
+                stops: const [
+                  LatLng(31.1048, 77.1734), // Shimla ISBT
+                  LatLng(31.5446, 77.1856), // Mandi
+                  LatLng(32.2432, 77.1892), // Manali
+                ],
               ),
             ),
             const SizedBox(height: 16),
