@@ -24,6 +24,7 @@ dependencies:
   # Utilities
   intl: ^0.19.0
   uuid: ^4.4.0
+  url_launcher: ^6.2.5
   # Location & GPS
   geolocator: ^12.0.0
   permission_handler: ^11.3.1
