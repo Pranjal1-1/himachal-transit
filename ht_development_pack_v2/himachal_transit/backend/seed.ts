@@ -6,7 +6,7 @@
  * Or: npm run seed
  */
 
-import { runMigrations } from './src/db';
+import { runDbMigrationsIfNeeded } from './src/db';
 import { 
   createUser, 
   createOrganization,
@@ -27,7 +27,7 @@ async function seed() {
   try {
     // Run migrations first
     console.log('📦 Running migrations...');
-    await runMigrations();
+    await runDbMigrationsIfNeeded();
     console.log('✅ Migrations complete');
 
     // Hash password for test users
@@ -47,20 +47,20 @@ async function seed() {
     
     // Passenger user
     const passenger = await createUser({
-      full_name: 'Test Passenger',
+      fullName: 'Test Passenger',
       phone: '9991112223',
       email: 'passenger@example.com',
-      password_hash: await bcrypt.hash('pass123', 10),
+      passwordHash: await bcrypt.hash('pass123', 10),
       role: 'PASSENGER',
     });
     console.log(`✅ Passenger: ${passenger.full_name} (${passenger.id})`);
 
     // Driver 1
     const driverUser1 = await createUser({
-      full_name: 'Rajesh Kumar',
+      fullName: 'Rajesh Kumar',
       phone: '9876543210',
       email: 'rajesh.driver@example.com',
-      password_hash: await bcrypt.hash('driver123', 10),
+      passwordHash: await bcrypt.hash('driver123', 10),
       role: 'DRIVER',
     });
     const driver1 = await createDriver({
@@ -73,10 +73,10 @@ async function seed() {
 
     // Driver 2
     const driverUser2 = await createUser({
-      full_name: 'Suresh Singh',
+      fullName: 'Suresh Singh',
       phone: '9876543211',
       email: 'suresh.driver@example.com',
-      password_hash: await bcrypt.hash('driver123', 10),
+      passwordHash: await bcrypt.hash('driver123', 10),
       role: 'DRIVER',
     });
     const driver2 = await createDriver({

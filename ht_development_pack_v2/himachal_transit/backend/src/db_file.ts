@@ -96,6 +96,7 @@ export async function getOrganizations() {
 
 export async function createOrganization({ name, code }: any) {
   const d = await readData();
+  if (!d.organizations) d.organizations = [];
   const org = { id: uuidv4(), name, code, created_at: Date.now() };
   d.organizations.push(org);
   await writeData(d);
@@ -117,6 +118,7 @@ export async function getDriverByUserId(userId: string) {
 
 export async function createDriver({ userId, organizationId, employeeId, verificationStatus = 'PENDING' }: any) {
   const d = await readData();
+  if (!d.drivers) d.drivers = [];
   const driver = { id: uuidv4(), user_id: userId, organization_id: organizationId, employee_id: employeeId, verification_status: verificationStatus, status: 'ACTIVE', created_at: Date.now() };
   d.drivers.push(driver);
   await writeData(d);
@@ -130,6 +132,7 @@ export async function getBuses() {
 
 export async function createBus({ organizationId, registrationNumber, model, fuelType, emissionStandard, capacity, status = 'IN_SERVICE' }: any) {
   const d = await readData();
+  if (!d.buses) d.buses = [];
   const bus = { id: uuidv4(), organization_id: organizationId, registration_number: registrationNumber, model, fuel_type: fuelType, emission_standard: emissionStandard, capacity, status, created_at: Date.now(), updated_at: Date.now() };
   d.buses.push(bus);
   await writeData(d);
@@ -157,6 +160,7 @@ export async function getRoutes() {
 
 export async function createRoute({ organizationId, name, origin, destination, geometry }: any) {
   const d = await readData();
+  if (!d.routes) d.routes = [];
   const route = { id: uuidv4(), organization_id: organizationId, name, origin, destination, geometry: geometry || null, status: 'ACTIVE', created_at: Date.now(), updated_at: Date.now() };
   d.routes.push(route);
   await writeData(d);
@@ -170,6 +174,7 @@ export async function getStops() {
 
 export async function createStop({ name, latitude, longitude, address, status = 'ACTIVE' }: any) {
   const d = await readData();
+  if (!d.stops) d.stops = [];
   const stop = { id: uuidv4(), name, latitude, longitude, address, status, geom: { type: 'Point', coordinates: [longitude, latitude] }, created_at: Date.now() };
   d.stops.push(stop);
   await writeData(d);
@@ -347,6 +352,7 @@ export async function unfavouriteBus(userId: string, busId: string) {
 
 export async function createRouteStop({ routeId, stopId, stopOrder }: any) {
   const d = await readData();
+  if (!d.route_stops) d.route_stops = [];
   const routeStop = { id: uuidv4(), route_id: routeId, stop_id: stopId, stop_order: stopOrder, created_at: Date.now() };
   d.route_stops.push(routeStop);
   await writeData(d);
@@ -365,6 +371,7 @@ export async function getAssignmentByDriverId(driverId: string) {
 
 export async function createAssignment({ driverId, busId, startTime, endTime, status = 'ACTIVE' }: any) {
   const d = await readData();
+  if (!d.driver_bus_assignments) d.driver_bus_assignments = [];
   const assignment = { id: uuidv4(), driver_id: driverId, bus_id: busId, start_time: startTime || null, end_time: endTime || null, status, created_at: Date.now() };
   d.driver_bus_assignments.push(assignment);
   await writeData(d);
@@ -383,6 +390,7 @@ export async function getActiveTripByDriverId(driverId: string) {
 
 export async function createTrip({ driverId, busId, routeId, startTime, endTime, status = 'SCHEDULED' }: any) {
   const d = await readData();
+  if (!d.trips) d.trips = [];
   const trip = { id: uuidv4(), driver_id: driverId, bus_id: busId, route_id: routeId, start_time: startTime || null, end_time: endTime || null, status, created_at: Date.now(), updated_at: Date.now() };
   d.trips.push(trip);
   await writeData(d);
@@ -405,6 +413,7 @@ export async function getGpsLocations(tripId: string) {
 
 export async function addGpsLocation({ tripId, latitude, longitude, speed, heading, accuracy, recordedAt }: any) {
   const d = await readData();
+  if (!d.gps_locations) d.gps_locations = [];
   const gpsLocation = {
     id: uuidv4(),
     trip_id: tripId,
@@ -655,6 +664,7 @@ export async function getNotifications(userId?: string) {
 
 export async function createNotification({ userId, title, body, read = false }: any) {
   const d = await readData();
+  if (!d.notifications) d.notifications = [];
   const notification = { id: uuidv4(), user_id: userId || null, title, body, read, created_at: Date.now() };
   d.notifications.push(notification);
   await writeData(d);
@@ -668,6 +678,7 @@ export async function getAuditLogs() {
 
 export async function createAuditLog({ userId, action, meta }: any) {
   const d = await readData();
+  if (!d.audit_logs) d.audit_logs = [];
   const auditLog = { id: uuidv4(), user_id: userId || null, action, meta: meta || null, created_at: Date.now() };
   d.audit_logs.push(auditLog);
   await writeData(d);
