@@ -369,10 +369,10 @@ export async function getAssignmentByDriverId(driverId: string) {
   return (d.driver_bus_assignments || []).find((a: any) => a.driver_id === driverId && a.status === 'ACTIVE') || null;
 }
 
-export async function createAssignment({ driverId, busId, startTime, endTime, status = 'ACTIVE' }: any) {
+export async function createAssignment({ driverId, busId, tripId, startTime, endTime, status = 'ACTIVE' }: any) {
   const d = await readData();
   if (!d.driver_bus_assignments) d.driver_bus_assignments = [];
-  const assignment = { id: uuidv4(), driver_id: driverId, bus_id: busId, start_time: startTime || null, end_time: endTime || null, status, created_at: Date.now() };
+  const assignment = { id: uuidv4(), driver_id: driverId, bus_id: busId, trip_id: tripId || null, start_time: startTime || null, end_time: endTime || null, status, created_at: Date.now() };
   d.driver_bus_assignments.push(assignment);
   await writeData(d);
   return assignment;

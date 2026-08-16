@@ -185,6 +185,26 @@ app.get('/buses', async (_req, res) => {
   }
 });
 
+// Get nearby buses based on location (MUST come before /buses/:busId)
+app.get('/buses/nearby', async (req, res) => {
+  try {
+    const { latitude, longitude, radiusKm } = req.query;
+    if (!latitude || !longitude) return res.status(400).json({ error: 'Missing latitude/longitude' });
+    const lat = parseFloat(latitude as string);
+    const lon = parseFloat(longitude as string);
+    const radius = radiusKm ? parseFloat(radiusKm as string) : 10;
+    if (isNaN(lat) || isNaN(lon)) return res.status(400).json({ error: 'Invalid latitude/longitude' });
+    const db = await import('./db');
+    console.log('DEBUG: Calling getNearbyBuses with', lat, lon, radius);
+    const buses = await db.getNearbyBuses(lat, lon, radius);
+    console.log('DEBUG: getNearbyBuses returned', buses.length, 'buses');
+    return res.json(buses);
+  } catch (e: any) {
+    console.error('DEBUG: Error in /buses/nearby:', e);
+    return res.status(500).json({ error: e.message });
+  }
+});
+
 app.post('/buses', async (req, res) => {
   try {
     const admin = await requireAdmin(req, res);
@@ -304,23 +324,6 @@ app.get('/search/buses', async (req, res) => {
     const { origin, destination } = req.query;
     const db = await import('./db');
     const buses = await db.searchBuses(origin as string, destination as string);
-    return res.json(buses);
-  } catch (e: any) {
-    return res.status(500).json({ error: e.message });
-  }
-});
-
-// Get nearby buses based on location
-app.get('/buses/nearby', async (req, res) => {
-  try {
-    const { latitude, longitude, radiusKm } = req.query;
-    if (!latitude || !longitude) return res.status(400).json({ error: 'Missing latitude/longitude' });
-    const lat = parseFloat(latitude as string);
-    const lon = parseFloat(longitude as string);
-    const radius = radiusKm ? parseFloat(radiusKm as string) : 10;
-    if (isNaN(lat) || isNaN(lon)) return res.status(400).json({ error: 'Invalid latitude/longitude' });
-    const db = await import('./db');
-    const buses = await db.getNearbyBuses(lat, lon, radius);
     return res.json(buses);
   } catch (e: any) {
     return res.status(500).json({ error: e.message });

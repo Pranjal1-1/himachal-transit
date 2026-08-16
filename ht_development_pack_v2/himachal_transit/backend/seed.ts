@@ -239,24 +239,26 @@ async function seed() {
     });
     console.log(`✅ Trip 2: ${trip2.id} (Driver: ${driver2.id}, Bus: ${bus2.id}, Route: ${route2.id})`);
 
-    // ========== 8. Create Assignments ==========
+// ========== 8. Create Assignments ==========
     console.log('🔗 Creating driver-bus assignments...');
     
     await createAssignment({
       driverId: driver1.id,
       busId: bus1.id,
+      tripId: trip1.id,
       startTime: startTime1,
       status: 'ACTIVE',
     });
-    console.log(`✅ Assignment: Driver ${driver1.id} -> Bus ${bus1.id}`);
-
+    console.log(`✅ Assignment: Driver ${driver1.id} -> Bus ${bus1.id} (Trip: ${trip1.id})`);
+    
     await createAssignment({
       driverId: driver2.id,
       busId: bus2.id,
+      tripId: trip2.id,
       startTime: startTime2,
       status: 'ACTIVE',
     });
-    console.log(`✅ Assignment: Driver ${driver2.id} -> Bus ${bus2.id}`);
+    console.log(`✅ Assignment: Driver ${driver2.id} -> Bus ${bus2.id} (Trip: ${trip2.id})`);
 
     // ========== 9. Add Sample GPS Locations ==========
     console.log('📍 Adding sample GPS locations...');
