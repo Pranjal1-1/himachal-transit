@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/assignments/[id]/edit/page": "app/assignments/[id]/edit/page.js",
+  "/assignments/page": "app/assignments/page.js",
+  "/login/page": "app/login/page.js",
+  "/buses/[id]/edit/page": "app/buses/[id]/edit/page.js",
+  "/page": "app/page.js",
+  "/routes/page": "app/routes/page.js",
+  "/assignments/new/page": "app/assignments/new/page.js",
+  "/routes/[id]/edit/page": "app/routes/[id]/edit/page.js",
+  "/buses/page": "app/buses/page.js",
+  "/stops/[id]/edit/page": "app/stops/[id]/edit/page.js",
+  "/stops/new/page": "app/stops/new/page.js",
+  "/routes/new/page": "app/routes/new/page.js",
+  "/stops/page": "app/stops/page.js",
+  "/buses/new/page": "app/buses/new/page.js"
+}

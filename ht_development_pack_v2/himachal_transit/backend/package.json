@@ -1,0 +1,39 @@
+{
+  "name": "himachal-transit-backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc -p .",
+    "test": "cross-env NODE_ENV=test jest --runInBand"
+  },
+  "bin": {
+    "migrate": "dist/run_migrations.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.23.0",
+    "socket.io": "^4.8.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.0.0",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/socket.io": "^3.0.1",
+    "@types/supertest": "^2.0.12",
+    "cross-env": "^10.1.0",
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0",
+    "ts-jest": "^29.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}

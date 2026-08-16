@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "id": "0575defe-1712-42df-a90f-0da500947f7e",
+      "full_name": "Seed Driver",
+      "phone": "9990001111",
+      "email": "driver@example.com",
+      "password_hash": "$2b$10$3bGZAAXGryOvObP0k8Zxi.Z/XSX1aZ6WDXojh8aUfJwWYrJ2R74i6",
+      "role": "DRIVER",
+      "created_at": 1786387276278,
+      "updated_at": 1786387276278
+    },
+    {
+      "id": "74ad29e4-1fa0-4675-8b07-e0ed83bd96ea",
+      "full_name": "Test User",
+      "phone": "9991112222",
+      "email": "test@example.com",
+      "password_hash": "$2b$10$YYNVnA1hr4k9PK6kGcYWR.0WtjWWGn4D0dBjqmVJArZbQ5V1uIBnq",
+      "role": "PASSENGER",
+      "created_at": 1786387410282,
+      "updated_at": 1786387410282
+    }
+  ],
+  "organizations": [
+    {
+      "id": "c6c4cd08-9514-4f41-813e-e1989e03a2cd",
+      "name": "Seed Org",
+      "code": "ORG123",
+      "created_at": 1786387276231
+    }
+  ],
+  "drivers": [
+    {
+      "id": "0a2b168e-4055-4752-afc4-d24e1efc8011",
+      "user_id": "0575defe-1712-42df-a90f-0da500947f7e",
+      "organization_id": "c6c4cd08-9514-4f41-813e-e1989e03a2cd",
+      "employee_id": "EMP001",
+      "verification_status": "VERIFIED",
+      "created_at": 1786387276278
+    }
+  ],
+  "audit_logs": [],
+  "refresh_tokens": [
+    {
+      "token": "959458d5-383b-4991-aadd-13f87374d377",
+      "userId": "74ad29e4-1fa0-4675-8b07-e0ed83bd96ea",
+      "expiresAt": 1786992210287,
+      "created_at": 1786387410287
+    },
+    {
+      "token": "6a146466-28c9-4cc2-a274-e57c88cc49f8",
+      "userId": "74ad29e4-1fa0-4675-8b07-e0ed83bd96ea",
+      "expiresAt": 1786992240038,
+      "created_at": 1786387440038
+    }
+  ],
+  "otps": []
+}

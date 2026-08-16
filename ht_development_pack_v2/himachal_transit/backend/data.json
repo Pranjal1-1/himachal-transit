@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "6f81fdcf-f029-490d-bc4e-66d6d026a7ac",
+      "full_name": "Test User",
+      "phone": "9991112223",
+      "email": "test2@example.com",
+      "password_hash": "$2b$10$GtJ7.5OfP0b3/7FpXyKQBO7bMSLNsQ/nC1xhb4r05pooFPBLEQpK2",
+      "role": "PASSENGER",
+      "created_at": 1786871713976,
+      "updated_at": 1786871713976
+    }
+  ],
+  "organizations": [],
+  "drivers": [],
+  "buses": [],
+  "routes": [],
+  "stops": [],
+  "route_stops": [],
+  "driver_bus_assignments": [],
+  "trips": [],
+  "gps_locations": [],
+  "notifications": [],
+  "audit_logs": [],
+  "refresh_tokens": [
+    {
+      "token": "25e5f6e2-90c2-4dcb-b524-d17af775193f",
+      "userId": "6f81fdcf-f029-490d-bc4e-66d6d026a7ac",
+      "expiresAt": 1787476513978,
+      "created_at": 1786871713978
+    }
+  ],
+  "otps": []
+}

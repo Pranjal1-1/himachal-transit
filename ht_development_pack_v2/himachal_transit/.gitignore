@@ -1,0 +1,18 @@
+# Node
+node_modules/
+npm-debug.log
+.env
+
+# Dart/Flutter
+**/build/
+**/.flutter-plugins
+**/.packages
+.pub-cache/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
