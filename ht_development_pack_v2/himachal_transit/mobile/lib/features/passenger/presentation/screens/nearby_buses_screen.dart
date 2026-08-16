@@ -19,6 +19,49 @@ class _NearbyBusesScreenState extends ConsumerState<NearbyBusesScreen> {
   double _radiusKm = 10;
   bool _isLoadingLocation = false;
   String? _locationError;
+
+  Widget get _busListWidget {
+    if (_isLoadingLocation) {
+      return _buildLoadingState();
+    }
+    if (_locationError != null) {
+      return _buildErrorState(_locationError!);
+    }
+    return FutureBuilder<List<NearbyBus>>(
+      future: _nearbyBusesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildLoadingState();
+        }
+        
+        if (snapshot.hasError) {
+          return _buildErrorState(snapshot.error.toString());
+        }
+        
+        final buses = snapshot.data ?? [];
+        
+        if (buses.isEmpty) {
+          return _buildEmptyState();
+        }
+        
+        return RefreshIndicator(
+          onRefresh: _loadNearbyBuses,
+          child: ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: buses.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final nearbyBus = buses[index];
+              return _NearbyBusCard(
+                nearbyBus: nearbyBus,
+                onTap: () => context.push('/bus/${nearbyBus.bus.id}'),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
   
   @override
   void initState() {
@@ -164,46 +207,10 @@ class _NearbyBusesScreenState extends ConsumerState<NearbyBusesScreen> {
           
           // Bus list
           Expanded(
-            child: _isLoadingLocation
-                ? _buildLoadingState()
-                : _locationError != null
-                    ? _buildErrorState(_locationError!)
-                    : FutureBuilder<List<NearbyBus>>(
-                        future: _nearbyBusesFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return _buildLoadingState();
-                          }
-                          
-                          if (snapshot.hasError) {
-                            return _buildErrorState(snapshot.error.toString());
-                          }
-                          
-                          final buses = snapshot.data ?? [];
-                          
-                          if (buses.isEmpty) {
-                            return _buildEmptyState();
-                          }
-                          
-                          return RefreshIndicator(
-                            onRefresh: _loadNearbyBuses,
-                            child: ListView.separated(
-                              padding: const EdgeInsets.all(16),
-                              itemCount: buses.length,
-                              separatorBuilder: (_, __) => const SizedBox(height: 12),
-                              itemBuilder: (context, index) {
-                                final nearbyBus = buses[index];
-                                return _NearbyBusCard(
-                                  nearbyBus: nearbyBus,
-                                  onTap: () => context.push('/bus/${nearbyBus.bus.id}'),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-        ),
-      ],
+            child: _busListWidget,
+          ),
+        ],
+      ),
     );
   }
   
@@ -353,7 +360,7 @@ class _NearbyBusCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      nearbyBus.bus.model,
+                      nearbyBus.bus.model ?? 'N/A',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -376,7 +383,7 @@ class _NearbyBusCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         _InfoChip(
                           icon: Icons.local_gas_station_outlined,
-                          label: nearbyBus.bus.fuelType,
+                          label: nearbyBus.bus.fuelType?.name ?? 'N/A',
                         ),
                       ],
                     ),

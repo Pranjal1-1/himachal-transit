@@ -293,18 +293,6 @@ export async function getNearbyBuses(latitude: number, longitude: number, radius
   return nearby.sort((a, b) => a.distance - b.distance);
 }
 
-// Helper function to calculate distance between two lat/lon points (Haversine formula)
-function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371; // Earth's radius in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-
 // Saved routes
 export async function getSavedRoutes(userId: string) {
   const d = await readData();
@@ -434,6 +422,231 @@ export async function addGpsLocation({ tripId, latitude, longitude, speed, headi
   return gpsLocation;
 }
 
+// ETA Engine functions
+const EARTH_RADIUS_KM = 6371;
+
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return EARTH_RADIUS_KM * c;
+}
+
+function calculateDistanceAlongRoute(
+  routePoints: { latitude: number; longitude: number }[],
+  fromIndex: number,
+  toIndex: number
+): number {
+  let totalDistance = 0;
+  for (let i = fromIndex; i < toIndex && i < routePoints.length - 1; i++) {
+    const p1 = routePoints[i];
+    const p2 = routePoints[i + 1];
+    totalDistance += calculateDistance(p1.latitude, p1.longitude, p2.latitude, p2.longitude);
+  }
+  return totalDistance;
+}
+
+function findClosestRoutePoint(
+  routePoints: { latitude: number; longitude: number }[],
+  latitude: number,
+  longitude: number
+): number {
+  let minDistance = Infinity;
+  let closestIndex = 0;
+  
+  for (let i = 0; i < routePoints.length; i++) {
+    const dist = calculateDistance(latitude, longitude, routePoints[i].latitude, routePoints[i].longitude);
+    if (dist < minDistance) {
+      minDistance = dist;
+      closestIndex = i;
+    }
+  }
+  
+  return closestIndex;
+}
+
+export interface EtaResult {
+  distanceToNextStopKm: number;
+  etaMinutes: number;
+  currentSpeedKmh: number;
+  nextStop: {
+    name: string;
+    latitude: number;
+    longitude: number;
+    stopOrder: number;
+  } | null;
+  remainingStops: number;
+  totalRemainingDistanceKm: number;
+  etaToDestinationMinutes: number;
+  currentRouteIndex: number;
+}
+
+export async function calculateTripEta(tripId: string): Promise<EtaResult | null> {
+  const d = await readData();
+  
+  // Get trip
+  const trip = (d.trips || []).find((t: any) => t.id === tripId);
+  if (!trip) return null;
+  
+  // Get route
+  const route = (d.routes || []).find((r: any) => r.id === trip.route_id);
+  if (!route) return null;
+  
+  // Get route stops with stop details
+  const routeStops = (d.route_stops || [])
+    .filter((rs: any) => rs.route_id === route.id)
+    .sort((a: any, b: any) => a.stop_order - b.stop_order);
+  
+  if (routeStops.length === 0) return null;
+  
+  // Get stop details
+  const stopsWithDetails = routeStops.map((rs: any) => {
+    const stop = (d.stops || []).find((s: any) => s.id === rs.stop_id);
+    return {
+      stop_id: rs.stop_id,
+      stop_order: rs.stop_order,
+      name: stop?.name || 'Unknown Stop',
+      latitude: stop?.latitude || 0,
+      longitude: stop?.longitude || 0,
+    };
+  });
+  
+  // Get latest GPS location for this trip
+  const gpsLocations = (d.gps_locations || [])
+    .filter((loc: any) => loc.trip_id === tripId)
+    .sort((a: any, b: any) => b.recorded_at - a.recorded_at);
+  
+  const latestGps = gpsLocations[0];
+  if (!latestGps) {
+    // No GPS data yet, return ETA from start
+    const firstStop = stopsWithDetails[0];
+    return {
+      distanceToNextStopKm: 0,
+      etaMinutes: 0,
+      currentSpeedKmh: 0,
+      nextStop: firstStop ? {
+        name: firstStop.name,
+        latitude: firstStop.latitude,
+        longitude: firstStop.longitude,
+        stopOrder: firstStop.stop_order,
+      } : null,
+      remainingStops: stopsWithDetails.length,
+      totalRemainingDistanceKm: 0,
+      etaToDestinationMinutes: 0,
+      currentRouteIndex: 0,
+    };
+  }
+  
+  // Parse route geometry if available
+  let routePoints: { latitude: number; longitude: number }[] = [];
+  if (route.geometry) {
+    try {
+      // Parse WKT LINESTRING format: "LINESTRING(lon lat, lon lat, ...)"
+      const coords = route.geometry
+        .replace('LINESTRING(', '')
+        .replace(')', '')
+        .split(',')
+        .map((c: string) => c.trim().split(' ').map(Number))
+        .map(([lon, lat]: number[]) => ({ latitude: lat, longitude: lon }));
+      routePoints = coords;
+    } catch (e) {
+      console.warn('Failed to parse route geometry:', e);
+    }
+  }
+  
+  // Use GPS speed or fallback
+  const currentSpeed = latestGps.speed && latestGps.speed > 0 ? latestGps.speed : 20; // km/h fallback
+  const minSpeed = 20;
+  const speed = Math.max(currentSpeed, minSpeed);
+  const dwellTimeMinutes = 2;
+  
+  const currentLocation = {
+    latitude: latestGps.latitude,
+    longitude: latestGps.longitude,
+  };
+  
+  // Find closest stop to current location
+  let minDist = Infinity;
+  let closestStopIndex = 0;
+  
+  for (let i = 0; i < stopsWithDetails.length; i++) {
+    const stop = stopsWithDetails[i];
+    const dist = calculateDistance(
+      currentLocation.latitude,
+      currentLocation.longitude,
+      stop.latitude,
+      stop.longitude
+    );
+    if (dist < minDist) {
+      minDist = dist;
+      closestStopIndex = i;
+    }
+  }
+  
+  // Next stop is the one after the closest (assuming forward progress)
+  const nextStopIndex = Math.min(closestStopIndex + 1, stopsWithDetails.length - 1);
+  const nextStop = stopsWithDetails[nextStopIndex] || null;
+  
+  // Calculate distance to next stop
+  let distanceToNextStopKm = 0;
+  if (nextStop) {
+    distanceToNextStopKm = calculateDistance(
+      currentLocation.latitude,
+      currentLocation.longitude,
+      nextStop.latitude,
+      nextStop.longitude
+    );
+  }
+  
+  // ETA to next stop
+  const etaMinutes = nextStop ? Math.round((distanceToNextStopKm / speed) * 60) : 0;
+  
+  // Calculate total remaining distance and ETA
+  let totalRemainingDistanceKm = distanceToNextStopKm;
+  let etaToDestinationMinutes = etaMinutes;
+  const remainingStopsCount = stopsWithDetails.length - nextStopIndex - 1;
+  
+  if (routePoints.length > 1) {
+    const currentRouteIndex = findClosestRoutePoint(routePoints, currentLocation.latitude, currentLocation.longitude);
+    const lastIndex = routePoints.length - 1;
+    totalRemainingDistanceKm = calculateDistanceAlongRoute(routePoints, currentRouteIndex, lastIndex);
+    etaToDestinationMinutes = Math.round((totalRemainingDistanceKm / speed) * 60);
+    etaToDestinationMinutes += remainingStopsCount * 2; // 2 min dwell time per stop
+  } else {
+    // Fallback: sum distances between consecutive stops
+    for (let i = nextStopIndex; i < stopsWithDetails.length - 1; i++) {
+      const dist = calculateDistance(
+        stopsWithDetails[i].latitude,
+        stopsWithDetails[i].longitude,
+        stopsWithDetails[i + 1].latitude,
+        stopsWithDetails[i + 1].longitude
+      );
+      totalRemainingDistanceKm += dist;
+    }
+    etaToDestinationMinutes = Math.round((totalRemainingDistanceKm / speed) * 60);
+    etaToDestinationMinutes += remainingStopsCount * 2;
+  }
+  
+  return {
+    distanceToNextStopKm: Math.round(distanceToNextStopKm * 100) / 100,
+    etaMinutes,
+    currentSpeedKmh: speed,
+    nextStop: nextStop ? {
+      name: nextStop.name,
+      latitude: nextStop.latitude,
+      longitude: nextStop.longitude,
+      stopOrder: nextStop.stop_order,
+    } : null,
+    remainingStops: Math.max(0, stopsWithDetails.length - nextStopIndex - 1),
+    totalRemainingDistanceKm: Math.round(totalRemainingDistanceKm * 100) / 100,
+    etaToDestinationMinutes,
+    currentRouteIndex: routePoints.length > 0 ? findClosestRoutePoint(routePoints, currentLocation.latitude, currentLocation.longitude) : 0,
+  };
+}
+
 export async function getNotifications(userId?: string) {
   const d = await readData();
   const notifications = d.notifications || [];
@@ -520,4 +733,5 @@ export default {
   getFavouriteBuses,
   favouriteBus,
   unfavouriteBus,
+  calculateTripEta,
 };

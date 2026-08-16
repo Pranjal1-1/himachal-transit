@@ -1,25 +1,189 @@
 {
   "users": [
     {
-      "id": "fdd389ca-ff8e-4bdc-9c16-ad6b983e3a30",
-      "full_name": "Test User",
-      "phone": "9991112223",
-      "email": "test2@example.com",
-      "password_hash": "$2b$10$rF3fat/H.erfs8org21MRuOPi/zw8BpV4wewknFymG2HWKtdHgbDW",
-      "role": "PASSENGER",
-      "created_at": 1786873400496,
-      "updated_at": 1786873400496
+      "id": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "full_name": "Phase3 User",
+      "phone": "9992223333",
+      "email": "phase3@example.com",
+      "password_hash": "$2b$10$GaJcPCHiOM2jBVTbfadTUO7WdPCXEp7.bJ7fDPas8bi0GvZy8WGC.",
+      "role": "DRIVER",
+      "created_at": 1786904196227,
+      "updated_at": 1786904196333
+    },
+    {
+      "id": "58c00fde-5f7a-4161-8467-1ccb5fd2bfc2",
+      "full_name": "Phase3 Admin",
+      "phone": "9992223334",
+      "email": "admin.phase3@example.com",
+      "password_hash": "$2b$10$uCleqCcOqlXyLvWH/XJ7duO0gVHAQOufC3KvGePG1WAOFNktz7gj.",
+      "role": "ADMIN",
+      "created_at": 1786904196276,
+      "updated_at": 1786904196279
     }
   ],
-  "organizations": [],
-  "drivers": [],
-  "audit_logs": [],
+  "organizations": [
+    {
+      "id": "6b34319f-7ed1-4b9f-bfe8-907bb1061538",
+      "name": "Phase3 Org",
+      "code": "PH3",
+      "created_at": 1786904196329
+    }
+  ],
+  "drivers": [
+    {
+      "id": "31c68670-cae0-4a24-a392-7169ebd65d02",
+      "user_id": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "organization_id": "6b34319f-7ed1-4b9f-bfe8-907bb1061538",
+      "employee_id": "EMP100",
+      "verification_status": "VERIFIED",
+      "status": "ACTIVE",
+      "created_at": 1786904196332
+    }
+  ],
+  "buses": [
+    {
+      "id": "3d5610a8-0b55-4f86-903f-d37ccdea508f",
+      "organization_id": "6b34319f-7ed1-4b9f-bfe8-907bb1061538",
+      "registration_number": "HP01AB1234",
+      "model": "TATA",
+      "fuel_type": "Diesel",
+      "emission_standard": "BS-VI",
+      "capacity": 35,
+      "status": "MAINTENANCE",
+      "created_at": 1786904196336,
+      "updated_at": 1786904196338
+    }
+  ],
+  "routes": [
+    {
+      "id": "08894ea0-1e39-4e88-970b-a8699d90d9c5",
+      "organization_id": "6b34319f-7ed1-4b9f-bfe8-907bb1061538",
+      "name": "Shimla Express",
+      "origin": "Shimla",
+      "destination": "Kullu",
+      "geometry": "LINESTRING(76.7794 31.1048, 77.1110 30.9160)",
+      "status": "ACTIVE",
+      "created_at": 1786904196341,
+      "updated_at": 1786904196344
+    }
+  ],
+  "stops": [
+    {
+      "id": "e804ac64-9790-4fc9-855c-6484be5186d1",
+      "name": "Phase3 Stop",
+      "latitude": 31.1,
+      "longitude": 77.1,
+      "address": "Updated Road",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1,
+          31.1
+        ]
+      },
+      "created_at": 1786904196347,
+      "updated_at": 1786904196350
+    }
+  ],
+  "route_stops": [
+    {
+      "id": "431e0ebe-f828-479d-b84e-de1a45a2b629",
+      "route_id": "08894ea0-1e39-4e88-970b-a8699d90d9c5",
+      "stop_id": "e804ac64-9790-4fc9-855c-6484be5186d1",
+      "stop_order": 1,
+      "created_at": 1786904196353
+    }
+  ],
+  "driver_bus_assignments": [
+    {
+      "id": "c670b86a-d4db-4d95-821f-3fa9c75c34c0",
+      "driver_id": "31c68670-cae0-4a24-a392-7169ebd65d02",
+      "bus_id": "3d5610a8-0b55-4f86-903f-d37ccdea508f",
+      "start_time": 1786904196354,
+      "end_time": null,
+      "status": "ACTIVE",
+      "created_at": 1786904196355
+    }
+  ],
+  "trips": [
+    {
+      "id": "7b70f885-8184-4e64-815f-4a60d12c1838",
+      "driver_id": "31c68670-cae0-4a24-a392-7169ebd65d02",
+      "bus_id": "3d5610a8-0b55-4f86-903f-d37ccdea508f",
+      "route_id": "08894ea0-1e39-4e88-970b-a8699d90d9c5",
+      "start_time": 1786904196356,
+      "end_time": null,
+      "status": "ACTIVE",
+      "created_at": 1786904196357,
+      "updated_at": 1786904196357
+    }
+  ],
+  "gps_locations": [
+    {
+      "id": "0ee02df3-c971-4710-afaa-5160cc624091",
+      "trip_id": "7b70f885-8184-4e64-815f-4a60d12c1838",
+      "latitude": 31.101,
+      "longitude": 77.101,
+      "speed": 24,
+      "heading": 180,
+      "accuracy": 5,
+      "recorded_at": 1786904196408,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.101,
+          31.101
+        ]
+      },
+      "created_at": 1786904196411
+    }
+  ],
+  "notifications": [
+    {
+      "id": "46230db6-efa6-4ba3-a481-2398494073f4",
+      "user_id": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "title": "Test Notification",
+      "body": "Hello Phase 3",
+      "read": false,
+      "created_at": 1786904196416
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "7721e079-329e-4796-b8e8-af7f35228aa5",
+      "user_id": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "action": "TEST_PHASE3",
+      "meta": {
+        "source": "integration"
+      },
+      "created_at": 1786904196418
+    }
+  ],
   "refresh_tokens": [
     {
-      "token": "2f8bd79f-0e54-4255-be08-a4c6403cbbc1",
-      "userId": "fdd389ca-ff8e-4bdc-9c16-ad6b983e3a30",
-      "expiresAt": 1787478200497,
-      "created_at": 1786873400497
+      "token": "c97d5e3e-c843-40ba-87e8-34eee272a900",
+      "userId": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "expiresAt": 1787508996228,
+      "created_at": 1786904196228
+    },
+    {
+      "token": "52ff44f6-7ba8-4d71-8923-6887622993f4",
+      "userId": "58c00fde-5f7a-4161-8467-1ccb5fd2bfc2",
+      "expiresAt": 1787508996277,
+      "created_at": 1786904196277
+    },
+    {
+      "token": "0c1a0fe6-3209-4797-8229-0857446d1321",
+      "userId": "58c00fde-5f7a-4161-8467-1ccb5fd2bfc2",
+      "expiresAt": 1787508996325,
+      "created_at": 1786904196325
+    },
+    {
+      "token": "7bd2fcbb-7907-4e04-9320-a639eb86a550",
+      "userId": "7bea1e89-ff9a-4b85-8b23-9a3cf18c7186",
+      "expiresAt": 1787508996406,
+      "created_at": 1786904196406
     }
   ],
   "otps": []

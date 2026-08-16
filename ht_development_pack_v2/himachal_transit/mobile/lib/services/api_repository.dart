@@ -12,6 +12,7 @@ import 'package:himachal_transit_mobile/models/notification_model.dart';
 import 'package:himachal_transit_mobile/models/nearby_bus.dart';
 import 'package:himachal_transit_mobile/models/saved_route.dart';
 import 'package:himachal_transit_mobile/models/favourite_bus.dart';
+import 'package:himachal_transit_mobile/models/eta.dart';
 
 abstract class ApiRepository {
   // Buses
@@ -73,6 +74,9 @@ abstract class ApiRepository {
   // Notifications
   Future<List<Notification>> getNotifications({String? userId});
   Future<Notification> createNotification(CreateNotificationRequest request);
+  
+  // ETA
+  Future<EtaResult> getTripEta(String tripId);
 }
 
 class ApiRepositoryImpl implements ApiRepository {
@@ -420,6 +424,16 @@ class ApiRepositoryImpl implements ApiRepository {
     if (response.statusCode != 204 && response.statusCode != 200) {
       throw Exception(response.data?['error'] ?? 'Failed to unfavourite bus');
     }
+  }
+  
+  // ETA
+  @override
+  Future<EtaResult> getTripEta(String tripId) async {
+    final response = await _apiService.get('/trips/$tripId/eta');
+    if (response.statusCode == 200) {
+      return EtaResult.fromJson(response.data);
+    }
+    throw Exception('Failed to fetch ETA');
   }
 }
 

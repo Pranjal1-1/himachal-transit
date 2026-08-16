@@ -275,3 +275,8 @@ export function unfavouriteBus(userId: string, busId: string) {
   if (USE_PG) return getPg().then((pg) => pg.unfavouriteBus(userId, busId));
   return fileDb.unfavouriteBus(userId, busId);
 }
+
+export function calculateTripEta(tripId: string) {
+  if (USE_PG) return getPg().then((pg) => pg.calculateTripEta(tripId));
+  return fileDb.calculateTripEta(tripId);
+}

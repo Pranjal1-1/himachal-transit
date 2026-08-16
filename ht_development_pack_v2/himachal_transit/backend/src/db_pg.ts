@@ -469,4 +469,12 @@ export async function unfavouriteBus(userId: string, busId: string) {
   return res.rowCount > 0;
 }
 
+// ETA Engine - stub for PostgreSQL (would use PostGIS in production)
+export async function calculateTripEta(tripId: string) {
+  if (!pool) throw new Error('Postgres pool not initialized');
+  // This would use PostGIS for accurate routing in production
+  // For now, return null to indicate not implemented for PG
+  return null;
+}
+
 export { pool };

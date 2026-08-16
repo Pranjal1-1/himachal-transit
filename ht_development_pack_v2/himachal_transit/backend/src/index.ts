@@ -664,9 +664,33 @@ app.post('/gps', async (req, res) => {
         accuracy: accuracy ?? null,
         recordedAt: recordedAt || new Date().toISOString(),
       });
+
+      // Calculate and broadcast ETA update
+      const db = await import('./db');
+      const eta = await db.calculateTripEta(tripId);
+      if (eta) {
+        realtimeServer.broadcastBusEta({
+          tripId: tripId,
+          busId: assignment.bus_id,
+          ...eta,
+        });
+      }
     }
     
     return res.status(201).json(location);
+  } catch (e: any) {
+    return res.status(500).json({ error: e.message });
+  }
+});
+
+// GET /trips/:tripId/eta - Get ETA for a trip
+app.get('/trips/:tripId/eta', async (req, res) => {
+  try {
+    const { tripId } = req.params;
+    const db = await import('./db');
+    const eta = await db.calculateTripEta(tripId);
+    if (!eta) return res.status(404).json({ error: 'Trip not found or no route data' });
+    return res.json(eta);
   } catch (e: any) {
     return res.status(500).json({ error: e.message });
   }
