@@ -14,6 +14,7 @@ import 'package:himachal_transit_mobile/features/passenger/presentation/screens/
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/search_results_screen.dart';
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/nearby_buses_screen.dart';
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/stop_details_screen.dart';
+import 'package:himachal_transit_mobile/features/passenger/presentation/screens/saved_routes_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_home_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_bus_details_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_route_details_screen.dart';
@@ -183,6 +184,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/stop/:stopId',
         name: 'stop-details',
         builder: (context, state) => StopDetailsScreen(stopId: state.pathParameters['stopId']!),
+      ),
+      
+      // Saved Routes
+      GoRoute(
+        path: '/saved-routes',
+        name: 'saved-routes',
+        builder: (context, state) => const SavedRoutesScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
