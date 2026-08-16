@@ -18,10 +18,10 @@ class PassengerHomeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Home'),
         centerTitle: true,
-        actions: [
+actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
+            onPressed: () => context.go('/notifications'),
           ),
           IconButton(
             icon: const Icon(Icons.person_outline),
