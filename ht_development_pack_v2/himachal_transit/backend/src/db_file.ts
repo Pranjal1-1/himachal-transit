@@ -306,6 +306,7 @@ export async function getSavedRoutes(userId: string) {
 
 export async function saveRoute(userId: string, routeId: string) {
   const d = await readData();
+  if (!d.saved_routes) d.saved_routes = [];
   const existing = (d.saved_routes || []).find((sr: any) => sr.user_id === userId && sr.route_id === routeId);
   if (existing) return existing;
   
@@ -332,6 +333,7 @@ export async function getFavouriteBuses(userId: string) {
 
 export async function favouriteBus(userId: string, busId: string) {
   const d = await readData();
+  if (!d.favourite_buses) d.favourite_buses = [];
   const existing = (d.favourite_buses || []).find((fb: any) => fb.user_id === userId && fb.bus_id === busId);
   if (existing) return existing;
   
@@ -343,6 +345,7 @@ export async function favouriteBus(userId: string, busId: string) {
 
 export async function unfavouriteBus(userId: string, busId: string) {
   const d = await readData();
+  if (!d.favourite_buses) d.favourite_buses = [];
   const idx = (d.favourite_buses || []).findIndex((fb: any) => fb.user_id === userId && fb.bus_id === busId);
   if (idx === -1) return false;
   d.favourite_buses.splice(idx, 1);
