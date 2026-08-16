@@ -12,6 +12,7 @@ import 'package:himachal_transit_mobile/features/passenger/presentation/screens/
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/route_details_screen.dart';
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/trip_tracking_screen.dart';
 import 'package:himachal_transit_mobile/features/passenger/presentation/screens/search_results_screen.dart';
+import 'package:himachal_transit_mobile/features/passenger/presentation/screens/nearby_buses_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_home_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_bus_details_screen.dart';
 import 'package:himachal_transit_mobile/features/driver/presentation/screens/driver_route_details_screen.dart';
@@ -167,6 +168,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           final destination = extra?['destination'] ?? 'Unknown';
           return SearchResultsScreen(origin: origin, destination: destination);
         },
+      ),
+      
+      // Nearby Buses
+      GoRoute(
+        path: '/nearby-buses',
+        name: 'nearby-buses',
+        builder: (context, state) => const NearbyBusesScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

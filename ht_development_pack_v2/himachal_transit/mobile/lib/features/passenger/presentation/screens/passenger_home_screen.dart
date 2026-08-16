@@ -137,7 +137,7 @@ class PassengerHomeScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               
-              // Nearby Buses (placeholder)
+// Nearby Buses (placeholder)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -148,7 +148,7 @@ class PassengerHomeScreen extends ConsumerWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => context.go('/passenger/search'),
+                    onPressed: () => context.go('/nearby-buses'),
                     child: const Text('View All'),
                   ),
                 ],
