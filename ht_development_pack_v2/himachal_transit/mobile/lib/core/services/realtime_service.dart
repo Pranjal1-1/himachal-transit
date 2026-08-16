@@ -194,25 +194,63 @@ class TripEndedEvent {
 class BusEtaUpdatedEvent {
   final String busId;
   final String tripId;
-  final String nextStopId;
+  final double distanceToNextStopKm;
   final int etaMinutes;
-  final double distanceMeters;
+  final double currentSpeedKmh;
+  final EtaNextStop? nextStop;
+  final int remainingStops;
+  final double totalRemainingDistanceKm;
+  final int etaToDestinationMinutes;
+  final int currentRouteIndex;
 
   const BusEtaUpdatedEvent({
     required this.busId,
     required this.tripId,
-    required this.nextStopId,
+    required this.distanceToNextStopKm,
     required this.etaMinutes,
-    required this.distanceMeters,
+    required this.currentSpeedKmh,
+    this.nextStop,
+    required this.remainingStops,
+    required this.totalRemainingDistanceKm,
+    required this.etaToDestinationMinutes,
+    required this.currentRouteIndex,
   });
 
   factory BusEtaUpdatedEvent.fromJson(Map<String, dynamic> json) {
     return BusEtaUpdatedEvent(
       busId: json['busId'] as String,
       tripId: json['tripId'] as String,
-      nextStopId: json['nextStopId'] as String,
-      etaMinutes: json['etaMinutes'] as int,
-      distanceMeters: (json['distanceMeters'] as num).toDouble(),
+      distanceToNextStopKm: (json['distanceToNextStopKm'] as num?)?.toDouble() ?? 0.0,
+      etaMinutes: json['etaMinutes'] as int? ?? 0,
+      currentSpeedKmh: (json['currentSpeedKmh'] as num?)?.toDouble() ?? 0.0,
+      nextStop: json['nextStop'] != null ? EtaNextStop.fromJson(json['nextStop'] as Map<String, dynamic>) : null,
+      remainingStops: json['remainingStops'] as int? ?? 0,
+      totalRemainingDistanceKm: (json['totalRemainingDistanceKm'] as num?)?.toDouble() ?? 0.0,
+      etaToDestinationMinutes: json['etaToDestinationMinutes'] as int? ?? 0,
+      currentRouteIndex: json['currentRouteIndex'] as int? ?? 0,
+    );
+  }
+}
+
+class EtaNextStop {
+  final String name;
+  final double latitude;
+  final double longitude;
+  final int stopOrder;
+
+  const EtaNextStop({
+    required this.name,
+    required this.latitude,
+    required this.longitude,
+    required this.stopOrder,
+  });
+
+  factory EtaNextStop.fromJson(Map<String, dynamic> json) {
+    return EtaNextStop(
+      name: json['name'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+      stopOrder: json['stopOrder'] as int,
     );
   }
 }
