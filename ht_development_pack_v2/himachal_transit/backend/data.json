@@ -1,14 +1,14 @@
 {
   "users": [
     {
-      "id": "c35230bf-015e-4d0f-9c02-8afc45c044d0",
+      "id": "c21656aa-951b-4514-8e01-7a750aa88871",
       "full_name": "Test User",
       "phone": "9991112223",
       "email": "test2@example.com",
-      "password_hash": "$2b$10$8lae7kdvxHmdWsueqjOMdesHd2Ef8nPdyo0pjRgM/vcG2H8zdenuy",
+      "password_hash": "$2b$10$0sT7lJ8L7SyW1LRRG2elde83556jQ1PVSyVTNzbWYuT5QmcDwAs16",
       "role": "PASSENGER",
-      "created_at": 1786909630935,
-      "updated_at": 1786909630935
+      "created_at": 1786909790013,
+      "updated_at": 1786909790013
     }
   ],
   "organizations": [],
@@ -16,10 +16,10 @@
   "audit_logs": [],
   "refresh_tokens": [
     {
-      "token": "bd78ee68-2c23-4e80-89ea-fd71e9cb7840",
-      "userId": "c35230bf-015e-4d0f-9c02-8afc45c044d0",
-      "expiresAt": 1787514430936,
-      "created_at": 1786909630936
+      "token": "d02a5e5a-f251-4c4f-9f2f-d64501046f44",
+      "userId": "c21656aa-951b-4514-8e01-7a750aa88871",
+      "expiresAt": 1787514590014,
+      "created_at": 1786909790014
     }
   ],
   "otps": []

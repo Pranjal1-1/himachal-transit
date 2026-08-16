@@ -1,7 +1,10 @@
 import { Server as SocketIOServer, Socket, ExtendedError } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
+import jwt from 'jsonwebtoken';
 import { createRealtimeEvent, RealtimeEvent, REALTIME_EVENTS } from './events';
 import { getActiveTripByDriverId, getAssignmentByDriverId } from '../db';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
@@ -44,16 +47,16 @@ export class RealtimeServer {
       }
 
       try {
-        const parts = token.split('.');
-        if (parts.length === 3) {
-          const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-          authSocket.userId = payload.sub;
-          authSocket.role = payload.role || 'PASSENGER';
-          authSocket.driverId = payload.driverId;
-          authSocket.organizationId = payload.orgId;
-        }
+        // Verify JWT signature and expiration (same as HTTP auth)
+        const payload = jwt.verify(token, JWT_SECRET) as any;
+        
+        authSocket.userId = payload.sub;
+        authSocket.role = payload.role || 'PASSENGER';
+        authSocket.driverId = payload.driverId;
+        authSocket.organizationId = payload.orgId;
       } catch (e) {
-        // Token parsing failed, continue as anonymous
+        // Invalid or expired token - reject connection
+        return next(new Error('Invalid or expired token'));
       }
 
       authSocket.subscriptions = new Set();
