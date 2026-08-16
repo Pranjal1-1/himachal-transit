@@ -25,6 +25,7 @@ import 'package:himachal_transit_mobile/features/driver/presentation/screens/act
 import 'package:himachal_transit_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:himachal_transit_mobile/features/profile/presentation/screens/settings_screen.dart';
 import 'package:himachal_transit_mobile/features/profile/presentation/screens/privacy_security_screen.dart';
+import 'package:himachal_transit_mobile/features/profile/presentation/screens/help_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -215,6 +216,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/privacy-security',
         name: 'privacy-security',
         builder: (context, state) => const PrivacySecurityScreen(),
+      ),
+      
+      // Help & Support
+      GoRoute(
+        path: '/help',
+        name: 'help',
+        builder: (context, state) => const HelpScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
