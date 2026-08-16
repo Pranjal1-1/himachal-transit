@@ -36,6 +36,7 @@ app.use(cors());
 app.use(express.json());
 
 const authLimiter = rateLimit({ windowMs: 60 * 1000, max: 10, skip: () => process.env.NODE_ENV === 'test' });
+const gpsLimiter = rateLimit({ windowMs: 60 * 1000, max: 30, skip: () => process.env.NODE_ENV === 'test', message: 'Too many GPS updates, please slow down' });
 
 async function getRoleFromRequest(req: any) {
   const token = req.headers.authorization?.split(' ')[1];
@@ -628,7 +629,7 @@ app.get('/gps', async (req, res) => {
   }
 });
 
-app.post('/gps', async (req, res) => {
+app.post('/gps', gpsLimiter, async (req, res) => {
   try {
     const { tripId, latitude, longitude, speed, heading, accuracy, recordedAt } = req.body;
     if (!tripId || latitude == null || longitude == null) return res.status(400).json({ error: 'Missing GPS location fields' });
