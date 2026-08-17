@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +33,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   
   return GoRouter(
     initialLocation: '/',
-    refreshListenable: GoRouterRefreshStream(authState),
+    refreshListenable: GoRouterRefreshStream(ref),
     redirect: (context, state) {
       final isLoggedIn = authState.isLoggedIn;
       final userRole = authState.userRole;
@@ -72,6 +73,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null; // No redirect
     },
     routes: [
+      // Root route - redirects based on auth state
+      GoRoute(
+        path: '/',
+        name: 'root',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        ),
+      ),
+      
       // Auth routes
       GoRoute(
         path: '/login',
@@ -249,12 +259,20 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 // Helper class to listen to Riverpod state changes in GoRouter
 class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(AuthState authState) {
-    // We'll use a simple approach - notify on auth state changes
+  final Ref _ref;
+  late final ProviderSubscription _subscription;
+  
+  GoRouterRefreshStream(this._ref) {
+    // Listen to auth state changes and notify GoRouter
+    _subscription = _ref.listen<AuthState>(authStateProvider, (previous, next) {
+      notifyListeners();
+    });
   }
   
-  void notify() {
-    notifyListeners();
+  @override
+  void dispose() {
+    _subscription.close();
+    super.dispose();
   }
 }
 

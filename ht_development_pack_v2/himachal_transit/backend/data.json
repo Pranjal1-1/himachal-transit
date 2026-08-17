@@ -49,6 +49,26 @@
       "role": "DRIVER",
       "created_at": 1786971908800,
       "updated_at": 1786971908800
+    },
+    {
+      "id": "3cb01057-9912-4982-951b-106a8894ec04",
+      "full_name": "Test User",
+      "phone": "9997787104",
+      "email": "test1786987104@example.com",
+      "password_hash": "$2b$10$ne5sNPEH1onFFfaK.xtVQOZhd/ApmNBN/68FAbw8LKJAIpLPhw2kW",
+      "role": "PASSENGER",
+      "created_at": 1786987105044,
+      "updated_at": 1786987105044
+    },
+    {
+      "id": "dc58bcb7-5e82-4fdf-9cca-ada8e25f4d09",
+      "full_name": "Mobile Proof User",
+      "phone": "9776687217",
+      "email": "mobileproof1786987217@example.com",
+      "password_hash": "$2b$10$bzceUuU43y2dpVukVqi8w.tWFSrZMOVAw24yl.Ta26zBtXpP54iX2",
+      "role": "PASSENGER",
+      "created_at": 1786987217769,
+      "updated_at": 1786987217769
     }
   ],
   "organizations": [
@@ -406,6 +426,24 @@
         ]
       },
       "created_at": 1786971908839
+    },
+    {
+      "id": "e7b96ddf-c68d-404a-82cc-c30b9681570f",
+      "trip_id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "latitude": 31.12,
+      "longitude": 77.175,
+      "speed": 50,
+      "heading": 50,
+      "accuracy": 4,
+      "recorded_at": 1786988912269,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.175,
+          31.12
+        ]
+      },
+      "created_at": 1786988912269
     }
   ],
   "notifications": [],
@@ -422,6 +460,84 @@
       "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
       "expiresAt": 1787576746579,
       "created_at": 1786971946579
+    },
+    {
+      "token": "10f0d831-f3e1-42f1-8d82-fa7a8774b1e1",
+      "userId": "3cb01057-9912-4982-951b-106a8894ec04",
+      "expiresAt": 1787591905051,
+      "created_at": 1786987105051
+    },
+    {
+      "token": "c1a571fe-b449-4509-ac8c-2dfed8561a58",
+      "userId": "3cb01057-9912-4982-951b-106a8894ec04",
+      "expiresAt": 1787591905099,
+      "created_at": 1786987105099
+    },
+    {
+      "token": "7b22046d-4c4b-4cde-8938-6472aeaf0277",
+      "userId": "dc58bcb7-5e82-4fdf-9cca-ada8e25f4d09",
+      "expiresAt": 1787592017770,
+      "created_at": 1786987217770
+    },
+    {
+      "token": "2ef1d270-721c-494f-b133-679efb28024d",
+      "userId": "dc58bcb7-5e82-4fdf-9cca-ada8e25f4d09",
+      "expiresAt": 1787592017819,
+      "created_at": 1786987217819
+    },
+    {
+      "token": "05b263f3-c57e-46b9-b56e-86c86611075a",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787592207145,
+      "created_at": 1786987407145
+    },
+    {
+      "token": "3a8d27f4-1709-4bd4-8651-73877f3c6721",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787592431270,
+      "created_at": 1786987631270
+    },
+    {
+      "token": "f330c6b5-4ec3-4460-90dd-ba57da3b33fc",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787592474775,
+      "created_at": 1786987674775
+    },
+    {
+      "token": "52da83dc-f490-4d54-a575-bc6f619a3ef1",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787592582838,
+      "created_at": 1786987782838
+    },
+    {
+      "token": "c39eea71-d4ce-4d40-a585-1ae8118ff562",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787592834856,
+      "created_at": 1786988034856
+    },
+    {
+      "token": "dcec6f45-4d0c-49ff-baa5-1eef91bd603d",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787593342799,
+      "created_at": 1786988542799
+    },
+    {
+      "token": "a4f42b19-0b78-46d3-bfa7-828fbbaa8c5c",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787593642958,
+      "created_at": 1786988842958
+    },
+    {
+      "token": "cc9db869-2aab-4fd0-82ac-f612a4926513",
+      "userId": "8ac59998-a63d-495f-a167-b9e16e762b2a",
+      "expiresAt": 1787593712231,
+      "created_at": 1786988912231
+    },
+    {
+      "token": "149ef2f8-98f5-4a0c-8849-48cf3bf88833",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787593838176,
+      "created_at": 1786989038176
     }
   ],
   "otps": []
