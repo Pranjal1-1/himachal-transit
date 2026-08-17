@@ -9,17 +9,405 @@
       "role": "PASSENGER",
       "created_at": 1786918752088,
       "updated_at": 1786918752088
+    },
+    {
+      "id": "9c82974b-65c8-4fb9-bf8f-d0497646a3c8",
+      "full_name": "Seed Driver",
+      "phone": "9990001111",
+      "email": "driver@example.com",
+      "password_hash": "$2b$10$qW60mhCSHIkmSeGzvBlfu.PH0LZ6H1xmAEo75pPIjGxMehYJGYapO",
+      "role": "DRIVER",
+      "created_at": 1786971846701,
+      "updated_at": 1786971846701
+    },
+    {
+      "id": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "full_name": "Test Passenger",
+      "phone": "9991112223",
+      "email": "passenger@example.com",
+      "password_hash": "$2b$10$u9kebS6B7aw4AYB1Pkh7Nu/PIhvfR8.hmVrB63qFUTDsntsZsbilW",
+      "role": "PASSENGER",
+      "created_at": 1786971908653,
+      "updated_at": 1786971908653
+    },
+    {
+      "id": "8ac59998-a63d-495f-a167-b9e16e762b2a",
+      "full_name": "Rajesh Kumar",
+      "phone": "9876543210",
+      "email": "rajesh.driver@example.com",
+      "password_hash": "$2b$10$jHpksfVfU/GUoyg81vPvvOrnvkyuFnSP38nX3YR52MCEP.mQ.Ln/e",
+      "role": "DRIVER",
+      "created_at": 1786971908726,
+      "updated_at": 1786971908726
+    },
+    {
+      "id": "3adcc462-fea4-43d3-b3f9-d34c2abda0a4",
+      "full_name": "Suresh Singh",
+      "phone": "9876543211",
+      "email": "suresh.driver@example.com",
+      "password_hash": "$2b$10$6zTlo53d4qyCWHV./Pc2vOojdMdNjcLiRfN1M44WaJwa9tbAMjsgS",
+      "role": "DRIVER",
+      "created_at": 1786971908800,
+      "updated_at": 1786971908800
     }
   ],
-  "organizations": [],
-  "drivers": [],
-  "buses": [],
-  "routes": [],
-  "stops": [],
-  "route_stops": [],
-  "driver_bus_assignments": [],
-  "trips": [],
-  "gps_locations": [],
+  "organizations": [
+    {
+      "id": "8e15048e-d7f1-42a2-ad17-7f0a4fce2623",
+      "name": "Seed Org",
+      "code": "ORG123",
+      "created_at": 1786971846627
+    },
+    {
+      "id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "name": "Himachal Road Transport Corporation",
+      "code": "HRTC",
+      "created_at": 1786971908578
+    }
+  ],
+  "drivers": [
+    {
+      "id": "c09aec4d-13c9-49c8-8a44-48bd85076e7b",
+      "user_id": "9c82974b-65c8-4fb9-bf8f-d0497646a3c8",
+      "organization_id": "8e15048e-d7f1-42a2-ad17-7f0a4fce2623",
+      "employee_id": "EMP001",
+      "verification_status": "VERIFIED",
+      "created_at": 1786971846701
+    },
+    {
+      "id": "de09e52f-d041-4172-bf7d-d21ed8974801",
+      "user_id": "8ac59998-a63d-495f-a167-b9e16e762b2a",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "employee_id": "HRTC-001",
+      "verification_status": "VERIFIED",
+      "status": "ACTIVE",
+      "created_at": 1786971908727
+    },
+    {
+      "id": "f2407926-f7cb-419c-bbd7-d4e2e0ad1bc7",
+      "user_id": "3adcc462-fea4-43d3-b3f9-d34c2abda0a4",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "employee_id": "HRTC-002",
+      "verification_status": "VERIFIED",
+      "status": "ACTIVE",
+      "created_at": 1786971908801
+    }
+  ],
+  "buses": [
+    {
+      "id": "e83eb05f-a14a-449b-aa2c-7311785e9cfa",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "registration_number": "HP-01A-1234",
+      "model": "Tata Starbus Ultra",
+      "fuel_type": "CNG",
+      "emission_standard": "BS-VI",
+      "capacity": 40,
+      "status": "IN_SERVICE",
+      "created_at": 1786971908803,
+      "updated_at": 1786971908803
+    },
+    {
+      "id": "c786b58b-7043-40a0-83c2-567a58825493",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "registration_number": "HP-01B-5678",
+      "model": "Ashok Leyland Viking",
+      "fuel_type": "Diesel",
+      "emission_standard": "BS-VI",
+      "capacity": 45,
+      "status": "IN_SERVICE",
+      "created_at": 1786971908804,
+      "updated_at": 1786971908804
+    },
+    {
+      "id": "9dfd23b6-3f63-40d7-aa15-89c6728a3285",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "registration_number": "HP-01C-9012",
+      "model": "Tata Starbus Ultra",
+      "fuel_type": "CNG",
+      "emission_standard": "BS-VI",
+      "capacity": 40,
+      "status": "IN_SERVICE",
+      "created_at": 1786971908806,
+      "updated_at": 1786971908806
+    }
+  ],
+  "routes": [
+    {
+      "id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "name": "Shimla - Manali Express",
+      "origin": "Shimla",
+      "destination": "Manali",
+      "geometry": "LINESTRING(77.1734 31.1048, 77.1856 31.5446, 77.1098 31.9596, 77.1892 32.2432)",
+      "status": "ACTIVE",
+      "created_at": 1786971908814,
+      "updated_at": 1786971908814
+    },
+    {
+      "id": "cf3f4f7f-e852-4ec5-9bbb-6c3a331c10a6",
+      "organization_id": "637b31a5-3444-4a1e-bb01-2e2137fcc847",
+      "name": "Shimla - Kullu Local",
+      "origin": "Shimla",
+      "destination": "Kullu",
+      "geometry": "LINESTRING(77.1734 31.1048, 77.1856 31.5446, 77.1098 31.9596)",
+      "status": "ACTIVE",
+      "created_at": 1786971908815,
+      "updated_at": 1786971908815
+    }
+  ],
+  "stops": [
+    {
+      "id": "6084c2dd-34d2-4b26-b830-adcf5a622d18",
+      "name": "Shimla ISBT",
+      "latitude": 31.1048,
+      "longitude": 77.1734,
+      "address": "Shimla ISBT, Shimla, HP",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1734,
+          31.1048
+        ]
+      },
+      "created_at": 1786971908807
+    },
+    {
+      "id": "0d6ee123-9b58-439d-b586-0b77e075cf7e",
+      "name": "Shimla Old Bus Stand",
+      "latitude": 31.1035,
+      "longitude": 77.1712,
+      "address": "Old Bus Stand, Shimla, HP",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1712,
+          31.1035
+        ]
+      },
+      "created_at": 1786971908808
+    },
+    {
+      "id": "56ce221b-2d36-414d-a1e8-a2adf42f4f30",
+      "name": "Mandi ISBT",
+      "latitude": 31.5446,
+      "longitude": 77.1856,
+      "address": "Mandi ISBT, Mandi, HP",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1856,
+          31.5446
+        ]
+      },
+      "created_at": 1786971908810
+    },
+    {
+      "id": "50952bf1-7224-4b1f-af02-bd21f5b6c1a5",
+      "name": "Kullu Bus Stand",
+      "latitude": 31.9596,
+      "longitude": 77.1098,
+      "address": "Kullu Bus Stand, Kullu, HP",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1098,
+          31.9596
+        ]
+      },
+      "created_at": 1786971908811
+    },
+    {
+      "id": "39bed117-e1ef-490f-9851-562ca990bf81",
+      "name": "Manali Bus Stand",
+      "latitude": 32.2432,
+      "longitude": 77.1892,
+      "address": "Manali Bus Stand, Manali, HP",
+      "status": "ACTIVE",
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1892,
+          32.2432
+        ]
+      },
+      "created_at": 1786971908812
+    }
+  ],
+  "route_stops": [
+    {
+      "id": "998bbc36-644a-4951-9be2-7b3ad28ccc6b",
+      "route_id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "stop_id": "6084c2dd-34d2-4b26-b830-adcf5a622d18",
+      "stop_order": 1,
+      "created_at": 1786971908816
+    },
+    {
+      "id": "a2c40d5d-7ac2-4449-b5e6-0c6ac86e558a",
+      "route_id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "stop_id": "56ce221b-2d36-414d-a1e8-a2adf42f4f30",
+      "stop_order": 2,
+      "created_at": 1786971908818
+    },
+    {
+      "id": "3b99048f-9848-40f5-906d-2d3dce6d8b4c",
+      "route_id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "stop_id": "50952bf1-7224-4b1f-af02-bd21f5b6c1a5",
+      "stop_order": 3,
+      "created_at": 1786971908819
+    },
+    {
+      "id": "b7f81044-7b8e-4f8a-8f72-f45588d5f288",
+      "route_id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "stop_id": "39bed117-e1ef-490f-9851-562ca990bf81",
+      "stop_order": 4,
+      "created_at": 1786971908820
+    },
+    {
+      "id": "9cd302d3-8bb0-41d5-9c9e-7f3484b7a266",
+      "route_id": "cf3f4f7f-e852-4ec5-9bbb-6c3a331c10a6",
+      "stop_id": "6084c2dd-34d2-4b26-b830-adcf5a622d18",
+      "stop_order": 1,
+      "created_at": 1786971908823
+    },
+    {
+      "id": "d8e9d2d4-427a-4925-823e-927c802fcbde",
+      "route_id": "cf3f4f7f-e852-4ec5-9bbb-6c3a331c10a6",
+      "stop_id": "56ce221b-2d36-414d-a1e8-a2adf42f4f30",
+      "stop_order": 2,
+      "created_at": 1786971908824
+    },
+    {
+      "id": "924e1193-7cc6-4055-ae01-e0056f991ee5",
+      "route_id": "cf3f4f7f-e852-4ec5-9bbb-6c3a331c10a6",
+      "stop_id": "50952bf1-7224-4b1f-af02-bd21f5b6c1a5",
+      "stop_order": 3,
+      "created_at": 1786971908825
+    }
+  ],
+  "driver_bus_assignments": [
+    {
+      "id": "c53ed929-1c55-49a7-9c52-749b2a7e70a8",
+      "driver_id": "de09e52f-d041-4172-bf7d-d21ed8974801",
+      "bus_id": "e83eb05f-a14a-449b-aa2c-7311785e9cfa",
+      "trip_id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "start_time": 1786979108826,
+      "end_time": null,
+      "status": "ACTIVE",
+      "created_at": 1786971908830
+    },
+    {
+      "id": "13006d6a-fc2b-4446-b2c4-44302e87dde5",
+      "driver_id": "f2407926-f7cb-419c-bbd7-d4e2e0ad1bc7",
+      "bus_id": "c786b58b-7043-40a0-83c2-567a58825493",
+      "trip_id": "42499fe0-783e-4cd9-9356-ea78b2d7c267",
+      "start_time": 1786986308828,
+      "end_time": null,
+      "status": "ACTIVE",
+      "created_at": 1786971908832
+    }
+  ],
+  "trips": [
+    {
+      "id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "driver_id": "de09e52f-d041-4172-bf7d-d21ed8974801",
+      "bus_id": "e83eb05f-a14a-449b-aa2c-7311785e9cfa",
+      "route_id": "1b63971c-a23f-4589-b663-7c4e305a7fb5",
+      "start_time": "1786979108826",
+      "end_time": "1787007908826",
+      "status": "ACTIVE",
+      "created_at": 1786971908827,
+      "updated_at": 1786971908827
+    },
+    {
+      "id": "42499fe0-783e-4cd9-9356-ea78b2d7c267",
+      "driver_id": "f2407926-f7cb-419c-bbd7-d4e2e0ad1bc7",
+      "bus_id": "c786b58b-7043-40a0-83c2-567a58825493",
+      "route_id": "cf3f4f7f-e852-4ec5-9bbb-6c3a331c10a6",
+      "start_time": "1786986308828",
+      "end_time": "1787007908828",
+      "status": "SCHEDULED",
+      "created_at": 1786971908828,
+      "updated_at": 1786971908828
+    }
+  ],
+  "gps_locations": [
+    {
+      "id": "9c8cd2d5-99a3-4653-b189-91b665c94e94",
+      "trip_id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "latitude": 31.1048,
+      "longitude": 77.1734,
+      "speed": 45,
+      "heading": 45,
+      "accuracy": 5,
+      "recorded_at": 1786971608833,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1734,
+          31.1048
+        ]
+      },
+      "created_at": 1786971908835
+    },
+    {
+      "id": "4ef239f2-3ee5-430e-b9a9-cd9f954d88bc",
+      "trip_id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "latitude": 31.12,
+      "longitude": 77.175,
+      "speed": 50,
+      "heading": 50,
+      "accuracy": 4,
+      "recorded_at": 1786971788836,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.175,
+          31.12
+        ]
+      },
+      "created_at": 1786971908836
+    },
+    {
+      "id": "a2a6d2aa-09e6-464b-91de-62dbb795f46b",
+      "trip_id": "008710fd-4844-419f-82c4-e7a59265435c",
+      "latitude": 31.135,
+      "longitude": 77.1765,
+      "speed": 55,
+      "heading": 52,
+      "accuracy": 3,
+      "recorded_at": 1786971908837,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1765,
+          31.135
+        ]
+      },
+      "created_at": 1786971908837
+    },
+    {
+      "id": "6d53c8ba-2dae-4ae4-ab41-bb38f8958bab",
+      "trip_id": "42499fe0-783e-4cd9-9356-ea78b2d7c267",
+      "latitude": 31.5446,
+      "longitude": 77.1856,
+      "speed": 0,
+      "heading": 0,
+      "accuracy": 10,
+      "recorded_at": 1786971908839,
+      "geom": {
+        "type": "Point",
+        "coordinates": [
+          77.1856,
+          31.5446
+        ]
+      },
+      "created_at": 1786971908839
+    }
+  ],
   "notifications": [],
   "audit_logs": [],
   "refresh_tokens": [
@@ -28,6 +416,12 @@
       "userId": "7a1480ac-d2e7-49a1-895d-9583ac1e3e8b",
       "expiresAt": 1787523552090,
       "created_at": 1786918752090
+    },
+    {
+      "token": "e0b0465b-c077-4b3e-a7ba-cab5c26949da",
+      "userId": "38803e2d-3579-4d30-8971-88f35d7eb137",
+      "expiresAt": 1787576746579,
+      "created_at": 1786971946579
     }
   ],
   "otps": []
