@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -60,6 +60,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         }
       }
       
+      // Role-based route protection
+      // If logged in and on root route, redirect to appropriate home
+      if (isLoggedIn && state.matchedLocation == '/') {
+        switch (userRole) {
+          case 'DRIVER':
+            return '/driver/home';
+          case 'ADMIN':
+            return '/admin';
+          case 'PASSENGER':
+          default:
+            return '/passenger/home';
+        }
+      }
+
       // Role-based route protection
       if (isLoggedIn) {
         final location = state.matchedLocation;
@@ -289,3 +303,5 @@ class PlaceholderScreen extends StatelessWidget {
     );
   }
 }
+
+
